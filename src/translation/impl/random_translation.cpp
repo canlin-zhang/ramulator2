@@ -17,8 +17,8 @@ class RandomTranslation : public ITranslation, public Implementation
 
     IFrontEnd* m_frontend;
 
-  protected:
-    std::mt19937_64 m_allocator_rng;
+    m_logger = Logging::create_logger("RandomTranslation");
+  }
 
     Addr_t m_max_paddr; // Max physical address
     Addr_t m_pagesize;  // Page size in bytes

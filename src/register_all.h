@@ -1,0 +1,29 @@
+#pragma once
+#include "frontend/register_frontend.h"
+#include "translation/register_translation.h"
+#include "memory_system/register_memory_system.h"
+
+namespace Ramulator
+{
+    void register_all()
+    {
+        // Register all frontends
+        register_frontend();
+
+        // Register all memory systems
+        register_memory_system();
+
+        // Register all translations
+        register_translation();
+
+        // // Register all address mappers
+        // register_addr_mapper();
+
+        // // Register all controllers
+        // register_controller();
+
+        // // Register all plugins
+        // register_plugin();
+    }
+
+}

@@ -2,9 +2,9 @@ set(MEMORYSYSTEM_FILES
   bh_memory_system.h
   memory_system.h
 
-  impl/bh_DRAM_system.cpp
-  impl/dummy_memory_system.cpp
-  impl/generic_DRAM_system.cpp
+  impl/bh_DRAM_system.h impl/bh_DRAM_system.cpp
+  impl/dummy_memory_system.h
+  impl/generic_DRAM_system.h impl/generic_DRAM_system.cpp
 )
 
 add_library(ramulator-memorysystem STATIC ${MEMORYSYSTEM_FILES})

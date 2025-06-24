@@ -27,3 +27,4 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 include(external.cmake)
 
 add_subdirectory(src)
+add_subdirectory(test)

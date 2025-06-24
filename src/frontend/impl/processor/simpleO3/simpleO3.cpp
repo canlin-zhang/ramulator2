@@ -17,13 +17,18 @@ class SimpleO3 final : public IFrontEnd, public Implementation
   private:
     ITranslation* m_translation;
 
-    int m_num_cores = -1;
-    std::vector<SimpleO3Core*> m_cores;
-    SimpleO3LLC* m_llc;
+        // LLC params
+        int llc_latency = param<int>("llc_latency").desc("Aggregated latency of the LLC.").default_val(47);
+        int llc_linesize_bytes = param<int>("llc_linesize").desc("LLC cache line size in bytes.").default_val(64);
+        int llc_associativity = param<int>("llc_associativity").desc("LLC set associativity.").default_val(8);
+        int llc_capacity_per_core = parse_capacity_str(param<std::string>("llc_capacity_per_core").desc("LLC capacity per core.").default_val("2MB"));
+        int llc_num_mshr_per_core = param<int>("llc_num_mshr_per_core").desc("Number of LLC MSHR entries per core.").default_val(16);
 
-    size_t m_num_expected_insts = 0;
+        // Simulation parameters
+        m_num_expected_insts = param<int>("num_expected_insts").desc("Number of instructions that the frontend should execute.").required();
 
-    std::string serialization_filename;
+        // Create address translation module
+        m_translation = create_child_ifce<ITranslation>();
 
   public:
     void init() override

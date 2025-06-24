@@ -2,15 +2,16 @@ set(CONTROLLER_FILES
   bh_controller.h
   bh_scheduler.h
   controller.h
+  register_controller.h
   scheduler.h
   plugin.h
   refresh.h
   rowpolicy.h
 
-  impl/bh_dram_controller.cpp
-  impl/dummy_controller.cpp
-  impl/generic_dram_controller.cpp
-  impl/prac_dram_controller.cpp
+  impl/bh_dram_controller.h impl/bh_dram_controller.cpp
+  impl/dummy_controller.h
+  impl/generic_dram_controller.h impl/generic_dram_controller.cpp
+  impl/prac_dram_controller.h impl/prac_dram_controller.cpp
 
   impl/scheduler/bh_scheduler.cpp
   impl/scheduler/blocking_scheduler.cpp

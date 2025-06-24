@@ -1,8 +1,10 @@
-#include <vector>
+#include "all_bank_refresh.h"
 
-#include "base.h"
-#include "controller.h"
-#include "refresh.h"
+namespace Ramulator
+{
+  void AllBankRefresh::setup(IFrontEnd *frontend, IMemorySystem *memory_system)
+  {
+    m_dram = m_ctrl->m_dram;
 
 namespace Ramulator
 {
@@ -16,12 +18,12 @@ class AllBankRefresh : public IRefreshManager, public Implementation
     IDRAM* m_dram;
     IDRAMController* m_ctrl;
 
-    int m_dram_org_levels = -1;
-    int m_num_ranks = -1;
+    m_next_refresh_cycle = m_nrefi;
+  }
 
-    int m_nrefi = -1;
-    int m_ref_req_id = -1;
-    Clk_t m_next_refresh_cycle = -1;
+  void AllBankRefresh::tick()
+  {
+    m_clk++;
 
   public:
     void init() override

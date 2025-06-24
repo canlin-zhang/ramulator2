@@ -1,9 +1,7 @@
-#include <vector>
+#include "prac_scheduler.h"
 
-#include "base.h"
-#include "bh_controller.h"
-#include "bh_scheduler.h"
-#include "impl/plugin/prac/prac.h"
+namespace Ramulator
+{
 
 namespace Ramulator
 {

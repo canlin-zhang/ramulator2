@@ -15,7 +15,7 @@ class PARA : public IControllerPlugin, public Implementation
     RAMULATOR_REGISTER_IMPLEMENTATION(IControllerPlugin, PARA, "PARA", "PARA.")
 
   private:
-    IDRAM* m_dram = nullptr;
+    IDRAM *m_dram = nullptr;
 
     float m_pr_threshold;
 
@@ -60,6 +60,7 @@ class PARA : public IControllerPlugin, public Implementation
         m_bank_level = m_dram->m_levels("bank");
         m_row_level = m_dram->m_levels("row");
     };
+  };
 
     void update(bool request_found, ReqBuffer::iterator& req_it) override
     {

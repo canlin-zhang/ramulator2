@@ -1,9 +1,7 @@
-#include <vector>
+#include "blocking_scheduler.h"
 
-#include "base.h"
-#include "bh_controller.h"
-#include "bh_scheduler.h"
-#include "impl/plugin/blockhammer/blockhammer.h"
+namespace Ramulator
+{
 
 namespace Ramulator
 {
@@ -28,6 +26,7 @@ class BlockingScheduler : public IBHScheduler, public Implementation
     void init() override
     {
     }
+  }
 
     void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override
     {
@@ -107,6 +106,5 @@ class BlockingScheduler : public IBHScheduler, public Implementation
     {
         m_clk++;
     }
-};
 
 } // namespace Ramulator

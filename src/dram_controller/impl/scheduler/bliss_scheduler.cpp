@@ -1,9 +1,7 @@
-#include <vector>
+#include "bliss_scheduler.h"
 
-#include "base.h"
-#include "bh_controller.h"
-#include "bh_scheduler.h"
-#include "impl/plugin/bliss/bliss.h"
+namespace Ramulator
+{
 
 namespace Ramulator
 {
@@ -30,6 +28,7 @@ class BLISSScheduler : public IBHScheduler, public Implementation
     void init() override
     {
     }
+  }
 
     void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override
     {
@@ -124,6 +123,10 @@ class BLISSScheduler : public IBHScheduler, public Implementation
     {
         m_clk++;
     }
-};
+    else
+    {
+      return req2;
+    }
+  }
 
 } // namespace Ramulator

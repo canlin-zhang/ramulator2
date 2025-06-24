@@ -15,8 +15,8 @@ class CounterBasedTRR : public IControllerPlugin, public Implementation
                                       "CounterBasedTRR.")
   private:
     Clk_t m_clk = 0;
-    IDeviceSpec* m_spec;
-    IDRAMController* m_ctrl;
+    IDeviceSpec *m_spec;
+    IDRAMController *m_ctrl;
 
     int m_dram_org_levels = -1;
     int m_rank_level_idx = -1;

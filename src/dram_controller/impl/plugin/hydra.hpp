@@ -20,9 +20,9 @@ class Hydra : public IControllerPlugin, public Implementation
     RAMULATOR_REGISTER_IMPLEMENTATION(IControllerPlugin, Hydra, "Hydra", "Hydra")
 
   private:
-    IDRAM* m_dram = nullptr;
-    ITranslation* m_translation = nullptr;
-    IAddrMapper* m_addr_mapper = nullptr;
+    IDRAM *m_dram = nullptr;
+    ITranslation *m_translation = nullptr;
+    IAddrMapper *m_addr_mapper = nullptr;
 
     struct GCT_Entry
     {
@@ -695,6 +695,6 @@ class Hydra : public IControllerPlugin, public Implementation
             }
         }
     };
-};
+  };
 
 } // namespace Ramulator

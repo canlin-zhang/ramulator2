@@ -1,7 +1,3 @@
-#include <vector>
-
-#include "base.h"
-#include "bh_controller.h"
 #include "bh_scheduler.h"
 
 namespace Ramulator
@@ -81,6 +77,5 @@ class BHScheduler : public IBHScheduler, public Implementation
     {
         m_clk++;
     }
-};
 
 } // namespace Ramulator

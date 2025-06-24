@@ -28,8 +28,17 @@ namespace Ramulator
         // Register all controllers
         register_controller();
 
-        // // Register all plugins
-        // register_plugin();
+        // Register all schedulers
+        register_scheduler();
+
+        // Register all row policies
+        register_row_policy();
+
+        // Register all refresh policies
+        register_refresh_policy();
+
+        // Register all plugins
+        register_plugin();
     }
 
 }

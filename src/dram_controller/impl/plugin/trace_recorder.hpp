@@ -19,7 +19,7 @@ class TraceRecorder : public IControllerPlugin, public Implementation
     RAMULATOR_REGISTER_IMPLEMENTATION(IControllerPlugin, TraceRecorder, "TraceRecorder",
                                       "CounterBasedTRR.")
   private:
-    IDRAM* m_dram;
+    IDRAM *m_dram;
 
     std::filesystem::path m_trace_path;
     Logger_t m_tracer;

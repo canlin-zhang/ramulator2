@@ -1,4 +1,4 @@
-#include <vector>
+#include "basic_rowpolicies.h"
 
 #include "base/base.h"
 #include "dram_controller/controller.h"
@@ -42,9 +42,12 @@ class ClosedRowPolicy : public IRowPolicy, public Implementation
     int m_num_bankgroups = -1;
     int m_num_banks = -1;
 
-    int s_num_close_reqs = 0;
+    if (!request_found)
+      return;
 
-    std::vector<uint64_t> m_col_accesses;
+    if (m_dram->m_command_meta(req_it->command).is_closing ||
+        m_dram->m_command_meta(req_it->command).is_refreshing) // PRE or REF
+    {
 
   public:
     void init() override {};

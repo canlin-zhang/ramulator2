@@ -1,8 +1,7 @@
-#include <vector>
+#include "generic_scheduler.h"
 
-#include "base.h"
-#include "controller.h"
-#include "scheduler.h"
+namespace Ramulator
+{
 
 namespace Ramulator
 {
@@ -68,6 +67,10 @@ class FRFCFS : public IScheduler, public Implementation
         }
         return candidate;
     }
-};
+    else
+    {
+      return req2;
+    }
+  }
 
 } // namespace Ramulator

@@ -7,8 +7,10 @@
 namespace Ramulator
 {
 
-DECLARE_DEBUG_FLAG(DBHCTRL);
-ENABLE_DEBUG_FLAG(DBHCTRL);
+    m_scheduler = create_child_ifce<IBHScheduler>();
+    m_refresh = create_child_ifce<IRefreshManager>();
+    m_rowpolicy = create_child_ifce<IRowPolicy>();
+    m_logger = Logging::create_logger("DBHCTRL");
 
 class BHDRAMController final : public IBHDRAMController, public Implementation
 {

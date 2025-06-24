@@ -1,9 +1,9 @@
 set(ADDRMAPPER_FILES
   addr_mapper.h
+  register_addr_mapper.h
 
-  impl/linear_mappers.cpp
-  impl/rit.cpp
-  impl/rit.h
+  impl/linear_mappers.h impl/linear_mappers.cpp
+  impl/rit.h impl/rit.cpp
 )
 
 add_library(ramulator-addrmapper STATIC ${ADDRMAPPER_FILES})

@@ -1,3 +1,4 @@
+#pragma once
 #include <functional>
 #include <limits>
 
@@ -20,8 +21,8 @@ class BHO3 final : public IFrontEnd, public Implementation
 
     int m_num_cores = -1;
     int m_num_blocking_cores = -1;
-    std::vector<BHO3Core*> m_cores;
-    BHO3LLC* m_llc;
+    std::vector<BHO3Core *> m_cores;
+    BHO3LLC *m_llc;
 
     size_t m_num_expected_insts = 0;
     uint64_t m_num_max_cycles = 0;
@@ -34,12 +35,12 @@ class BHO3 final : public IFrontEnd, public Implementation
   public:
     void init() override;
     void tick() override;
-    void receive(Request& req);
+    void receive(Request &req);
     bool is_finished() override;
-    void connect_memory_system(IMemorySystem* memory_system) override;
+    void connect_memory_system(IMemorySystem *memory_system) override;
     int get_num_cores() override;
-    BHO3LLC* get_llc();
-    std::vector<BHO3Core*>& get_cores();
-};
+    BHO3LLC *get_llc();
+    std::vector<BHO3Core *> &get_cores();
+  };
 
 } // namespace Ramulator

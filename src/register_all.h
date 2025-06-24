@@ -2,6 +2,9 @@
 #include "frontend/register_frontend.h"
 #include "translation/register_translation.h"
 #include "memory_system/register_memory_system.h"
+#include "dram/register_dram.h"
+#include "addr_mapper/register_addr_mapper.h"
+#include "dram_controller/register_controller.h"
 
 namespace Ramulator
 {
@@ -16,11 +19,14 @@ namespace Ramulator
         // Register all translations
         register_translation();
 
-        // // Register all address mappers
-        // register_addr_mapper();
+        // Register all DRAM implementations
+        register_dram();
 
-        // // Register all controllers
-        // register_controller();
+        // Register all address mappers
+        register_addr_mapper();
+
+        // Register all controllers
+        register_controller();
 
         // // Register all plugins
         // register_plugin();

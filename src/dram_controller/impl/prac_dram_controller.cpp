@@ -86,7 +86,7 @@ class PRACDRAMController final : public IBHDRAMController, public Implementation
             std::cout << "[PRACCTRL] Need PRAC plugin!";
             std::exit(0);
         }
-    };
+    }
 
     void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override
     {
@@ -128,7 +128,7 @@ class PRACDRAMController final : public IBHDRAMController, public Implementation
         register_stat(s_num_row_hits).name("controller_num_row_hits");
         register_stat(s_num_row_misses).name("controller_num_row_misses");
         register_stat(s_num_row_conflicts).name("controller_num_row_conflicts");
-    };
+    }
 
     bool send(Request& req) override
     {
@@ -171,7 +171,7 @@ class PRACDRAMController final : public IBHDRAMController, public Implementation
         }
 
         return true;
-    };
+    }
 
     bool priority_send(Request& req) override
     {
@@ -215,7 +215,7 @@ class PRACDRAMController final : public IBHDRAMController, public Implementation
 
         // Try to find a request to serve.
         ReqBuffer::iterator req_it;
-        ReqBuffer* buffer = nullptr;
+        ReqBuffer *buffer = nullptr;
         bool request_found = schedule_request(req_it, buffer);
 
         // RowPolicy
@@ -289,7 +289,7 @@ class PRACDRAMController final : public IBHDRAMController, public Implementation
                 pending.pop_front();
             }
         };
-    };
+    }
 
     /**
      * @brief    Checks if we need to switch to write mode
@@ -313,7 +313,7 @@ class PRACDRAMController final : public IBHDRAMController, public Implementation
                 m_is_write_mode = false;
             }
         }
-    };
+    }
 
     /**
      * @brief    Helper function to find a request to schedule from the buffers.

@@ -1,5 +1,6 @@
 set(DRAM_FILES
   dram.h
+  register_dram.h
   node.h
   spec.h
   lambdas.h
@@ -10,17 +11,17 @@ set(DRAM_FILES
   lambdas/action.h
   lambdas/power.h
 
-  impl/DDR3.cpp
-  impl/DDR4.cpp
-  impl/DDR4-VRR.cpp
-  impl/DDR4-RVRR.cpp
-  impl/DDR5.cpp
-  impl/DDR5-VRR.cpp
-  impl/DDR5-RVRR.cpp
-  impl/LPDDR5.cpp
-  impl/HBM.cpp
-  impl/HBM2.cpp
-  impl/HBM3.cpp
+  impl/DDR3.hpp
+  impl/DDR4.hpp
+  impl/DDR4-VRR.hpp
+  impl/DDR4-RVRR.hpp
+  impl/DDR5.hpp
+  impl/DDR5-VRR.hpp
+  impl/DDR5-RVRR.hpp
+  impl/LPDDR5.hpp
+  impl/HBM.hpp
+  impl/HBM2.hpp
+  impl/HBM3.hpp
 )
 
 add_library(ramulator-dram STATIC ${DRAM_FILES})

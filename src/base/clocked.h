@@ -1,21 +1,23 @@
-#ifndef     RAMULATOR_BASE_Clocked_H
-#define     RAMULATOR_BASE_Clocked_H
+#ifndef RAMULATOR_BASE_Clocked_H
+#define RAMULATOR_BASE_Clocked_H
 
 #include <vector>
 #include <string>
 
-#include "base/type.h"
+#include "type.h"
 
-namespace Ramulator {
+namespace Ramulator
+{
 
-/**
- * @brief    CRTP interface for all clocked objects (i.e., can be ticked)
- * 
- * @tparam   T 
- */
-template<class T>
-class Clocked {
-  friend T;
+  /**
+   * @brief    CRTP interface for all clocked objects (i.e., can be ticked)
+   *
+   * @tparam   T
+   */
+  template <class T>
+  class Clocked
+  {
+    friend T;
 
   protected:
     Clk_t m_clk = 0;
@@ -25,9 +27,8 @@ class Clocked {
 
   public:
     Clocked() {};
-};
+  };
 
-}        // namespace Ramulator
+} // namespace Ramulator
 
-
-#endif   // RAMULATOR_BASE_Clocked_H
+#endif // RAMULATOR_BASE_Clocked_H

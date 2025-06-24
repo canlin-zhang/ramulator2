@@ -4,22 +4,24 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "base/base.h"
-#include "dram_controller/controller.h"
+#include "base.h"
+#include "controller.h"
 
-namespace Ramulator {
+namespace Ramulator
+{
 
-class IAddrMapper {
-  RAMULATOR_REGISTER_INTERFACE(IAddrMapper, "AddrMapper", "Memory Controller Address Mapper");
+  class IAddrMapper
+  {
+    RAMULATOR_REGISTER_INTERFACE(IAddrMapper, "AddrMapper", "Memory Controller Address Mapper");
 
   public:
     /**
      * @brief  Applies the address mapping to a physical address and returns the DRAM address vector
-     * 
+     *
      */
-    virtual void apply(Request& req) = 0;   
-};
+    virtual void apply(Request &req) = 0;
+  };
 
-}       // namespace Ramulator
+} // namespace Ramulator
 
-#endif  // RAMULATOR_ADDR_MAPPER_ADDR_MAPPER_H
+#endif // RAMULATOR_ADDR_MAPPER_ADDR_MAPPER_H

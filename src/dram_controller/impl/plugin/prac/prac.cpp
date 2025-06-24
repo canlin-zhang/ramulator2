@@ -1,8 +1,8 @@
-#include "base/base.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/plugin.h"
-#include "dram_controller/impl/plugin/prac/prac.h"
-#include "dram_controller/impl/plugin/device_config/device_config.h"
+#include "base.h"
+#include "controller.h"
+#include "plugin.h"
+#include "impl/plugin/prac/prac.h"
+#include "impl/plugin/device_config/device_config.h"
 
 #include <limits>
 #include <vector>

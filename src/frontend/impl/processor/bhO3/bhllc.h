@@ -7,11 +7,11 @@
 #include <iostream>
 #include <fstream>
 
-#include "base/clocked.h"
-#include "base/debug.h"
-#include "base/type.h"
-#include "base/request.h"
-#include "memory_system/bh_memory_system.h"
+#include "clocked.h"
+#include "debug.h"
+#include "type.h"
+#include "request.h"
+#include "bh_memory_system.h"
 
 // BH Changes Begin
 #include <unordered_set>

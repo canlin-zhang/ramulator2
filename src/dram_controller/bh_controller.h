@@ -7,27 +7,32 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "base/base.h"
-#include "dram/dram.h"
-#include "dram_controller/bh_scheduler.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/plugin.h"
-#include "dram_controller/refresh.h"
+#include "base.h"
+#include "dram.h"
+#include "bh_scheduler.h"
+#include "controller.h"
+#include "plugin.h"
+#include "refresh.h"
 
-namespace Ramulator {
+namespace Ramulator
+{
 
-class IBHDRAMController : public IDRAMController {
-  RAMULATOR_REGISTER_INTERFACE(IBHDRAMController, "BHDRAMController", "BHammer Memory Controller Interface");
+  class IBHDRAMController : public IDRAMController
+  {
+    RAMULATOR_REGISTER_INTERFACE(IBHDRAMController, "BHDRAMController", "BHammer Memory Controller Interface");
 
   public:
-    IBHScheduler* m_scheduler = nullptr;
+    IBHScheduler *m_scheduler = nullptr;
     virtual void tick() = 0;
 
     template <class T>
-    T* get_plugin() {
-      for (auto plugin : m_plugins) {
-        T* cast = dynamic_cast<T*>(plugin);
-        if (cast) {
+    T *get_plugin()
+    {
+      for (auto plugin : m_plugins)
+      {
+        T *cast = dynamic_cast<T *>(plugin);
+        if (cast)
+        {
           return cast;
         }
       }
@@ -35,9 +40,9 @@ class IBHDRAMController : public IDRAMController {
     }
 
   protected:
-    std::vector<IControllerPlugin*> m_plugins;
-};
+    std::vector<IControllerPlugin *> m_plugins;
+  };
 
-}       // namespace Ramulator
+} // namespace Ramulator
 
-#endif  // RAMULATOR_CONTROLLER_LIVECONTROLLER_H
+#endif // RAMULATOR_CONTROLLER_LIVECONTROLLER_H

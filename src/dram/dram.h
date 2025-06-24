@@ -6,9 +6,9 @@
 #include <map>
 #include <functional>
 
-#include "base/base.h"
-#include "dram/spec.h"
-#include "dram/node.h"
+#include "base.h"
+#include "spec.h"
+#include "node.h"
 
 namespace Ramulator {
 

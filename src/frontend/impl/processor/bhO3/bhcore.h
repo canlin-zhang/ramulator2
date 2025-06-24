@@ -7,9 +7,9 @@
 #include <filesystem>
 #include <fstream>
 
-#include "base/type.h"
-#include "base/request.h"
-#include "translation/translation.h"
+#include "type.h"
+#include "request.h"
+#include "translation.h"
 
 namespace Ramulator {
 

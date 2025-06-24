@@ -1,5 +1,5 @@
 #include <iostream>
-#include "frontend/impl/processor/simpleO3/llc.h"
+#include "impl/processor/simpleO3/llc.h"
 
 namespace Ramulator {
 

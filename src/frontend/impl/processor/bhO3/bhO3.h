@@ -1,11 +1,11 @@
 #include <functional>
 #include <limits>
 
-#include "base/utils.h"
-#include "frontend/frontend.h"
-#include "translation/translation.h"
-#include "frontend/impl/processor/bhO3/bhcore.h"
-#include "frontend/impl/processor/bhO3/bhllc.h"
+#include "utils.h"
+#include "frontend.h"
+#include "translation.h"
+#include "impl/processor/bhO3/bhcore.h"
+#include "impl/processor/bhO3/bhllc.h"
 
 namespace Ramulator {
 

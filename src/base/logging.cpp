@@ -1,42 +1,50 @@
-#include "base/logging.h"
+#include "logging.h"
 
+namespace Ramulator
+{
 
-namespace Ramulator {
+  Logger_t Logging::create_logger(std::string name, std::string pattern)
+  {
+    auto logger = spdlog::stdout_color_st("Ramulator::" + name);
 
-Logger_t Logging::create_logger(std::string name, std::string pattern) {
-  auto logger = spdlog::stdout_color_st("Ramulator::" + name);
+    if (!logger)
+    {
+      throw InitializationError("Error creating logger {}!", name);
+    }
 
-  if (!logger) {
-    throw InitializationError("Error creating logger {}!", name);
-  }
-
-  logger->set_pattern(pattern);
-  logger->set_level(spdlog::level::debug);
-  return logger;
-}
-
-Logger_t Logging::get(std::string name) {
-  auto logger = spdlog::get("Ramulator::" + name);
-  if (logger) {
+    logger->set_pattern(pattern);
+    logger->set_level(spdlog::level::debug);
     return logger;
-  } else {
-    throw std::runtime_error(
-      fmt::format(
-        "Logger {} does not exist!",
-        name
-      )
-    );
   }
-}
 
-bool Logging::_create_base_logger() {
-  auto logger = create_logger("Base");
-  if (logger) {
-    return true;
-  } else {
-    throw InitializationError("Error creating the base logger!");
+  Logger_t Logging::get(std::string name)
+  {
+    auto logger = spdlog::get("Ramulator::" + name);
+    if (logger)
+    {
+      return logger;
+    }
+    else
+    {
+      throw std::runtime_error(
+          fmt::format(
+              "Logger {} does not exist!",
+              name));
+    }
   }
-  return false;
-}
 
-}        // namespace Ramulator
+  bool Logging::_create_base_logger()
+  {
+    auto logger = create_logger("Base");
+    if (logger)
+    {
+      return true;
+    }
+    else
+    {
+      throw InitializationError("Error creating the base logger!");
+    }
+    return false;
+  }
+
+} // namespace Ramulator

@@ -1,10 +1,14 @@
-add_library(ramulator-dram OBJECT)
+set(DRAM_FILES
+  dram.h
+  node.h
+  spec.h
+  lambdas.h
 
-target_sources(
-  ramulator-dram PRIVATE
-  dram.h  node.h  spec.h  lambdas.h  
-  
-  lambdas/preq.h  lambdas/rowhit.h  lambdas/rowopen.h lambdas/action.h lambdas/power.h
+  lambdas/preq.h
+  lambdas/rowhit.h
+  lambdas/rowopen.h
+  lambdas/action.h
+  lambdas/power.h
 
   impl/DDR3.cpp
   impl/DDR4.cpp
@@ -19,8 +23,14 @@ target_sources(
   impl/HBM3.cpp
 )
 
-target_link_libraries(
-  ramulator
-  PRIVATE
-  ramulator-dram
+add_library(ramulator-dram STATIC ${DRAM_FILES})
+
+target_link_libraries(ramulator-dram PUBLIC
+  ramulator-base
+  yaml-cpp::yaml-cpp
+  spdlog::spdlog
+)
+
+target_include_directories(ramulator-dram
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 )

@@ -1,4 +1,4 @@
-#include "dram_controller/controller.h"
+#include "controller.h"
 
 namespace Ramulator {
 

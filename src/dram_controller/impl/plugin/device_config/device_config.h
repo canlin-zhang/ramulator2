@@ -1,8 +1,8 @@
 #ifndef RAMULATOR_PLUGUTIL_DEVICECFG_H
 #define RAMULATOR_PLUGUTIL_DEVICECFG_H
 
-#include "base/base.h"
-#include "dram_controller/controller.h"
+#include "base.h"
+#include "controller.h"
 
 namespace Ramulator {
 

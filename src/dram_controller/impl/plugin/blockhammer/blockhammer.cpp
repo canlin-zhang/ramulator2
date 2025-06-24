@@ -1,11 +1,11 @@
-#include "base/base.h"
-#include "frontend/frontend.h"
-#include "translation/translation.h"
-#include "addr_mapper/addr_mapper.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/plugin.h"
-#include "frontend/impl/processor/bhO3/bhllc.h"
-#include "frontend/impl/processor/bhO3/bhO3.h"
+#include "base.h"
+#include "frontend.h"
+#include "translation.h"
+#include "addr_mapper.h"
+#include "controller.h"
+#include "plugin.h"
+#include "impl/processor/bhO3/bhllc.h"
+#include "impl/processor/bhO3/bhO3.h"
 
 #include <queue>
 #include <unordered_map>

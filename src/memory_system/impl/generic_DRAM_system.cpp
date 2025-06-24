@@ -1,8 +1,8 @@
-#include "memory_system/memory_system.h"
-#include "translation/translation.h"
-#include "dram_controller/controller.h"
-#include "addr_mapper/addr_mapper.h"
-#include "dram/dram.h"
+#include "memory_system.h"
+#include "translation.h"
+#include "controller.h"
+#include "addr_mapper.h"
+#include "dram.h"
 
 namespace Ramulator {
 

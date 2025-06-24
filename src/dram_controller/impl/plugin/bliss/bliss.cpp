@@ -1,10 +1,10 @@
-#include "base/base.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/plugin.h"
-#include "dram_controller/impl/plugin/device_config/device_config.h"
-#include "dram_controller/impl/plugin/bliss/bliss.h"
-#include "frontend/impl/processor/bhO3/bhllc.h"
-#include "frontend/impl/processor/bhO3/bhO3.h"
+#include "base.h"
+#include "controller.h"
+#include "plugin.h"
+#include "impl/plugin/device_config/device_config.h"
+#include "impl/plugin/bliss/bliss.h"
+#include "impl/processor/bhO3/bhllc.h"
+#include "impl/processor/bhO3/bhO3.h"
 
 #include <vector>
 #include <algorithm>

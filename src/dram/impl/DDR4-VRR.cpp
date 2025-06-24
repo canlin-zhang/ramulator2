@@ -1,5 +1,5 @@
-#include "dram/dram.h"
-#include "dram/lambdas.h"
+#include "dram.h"
+#include "lambdas.h"
 
 namespace Ramulator {
 

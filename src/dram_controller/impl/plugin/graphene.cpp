@@ -3,9 +3,9 @@
 #include <limits>
 #include <random>
 
-#include "base/base.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/plugin.h"
+#include "base.h"
+#include "controller.h"
+#include "plugin.h"
 
 namespace Ramulator {
 

@@ -1,15 +1,17 @@
-add_library(ramulator-translation OBJECT)
-
-target_sources(
-  ramulator-translation PRIVATE
+set(TRANSLATION_FILES
   translation.h
 
   impl/no_translation.cpp
   impl/random_translation.cpp
 )
 
-target_link_libraries(
-  ramulator
-  PRIVATE
-  ramulator-translation
+add_library(ramulator-translation STATIC ${TRANSLATION_FILES})
+
+target_link_libraries(ramulator-translation PUBLIC
+  ramulator-base
+  ramulator-frontend
+)
+
+target_include_directories(ramulator-translation
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 )

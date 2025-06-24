@@ -1,8 +1,8 @@
-#include "dram_controller/bh_controller.h"
-#include "memory_system/memory_system.h"
-#include "frontend/frontend.h"
-#include "frontend/impl/processor/bhO3/bhllc.h"
-#include "frontend/impl/processor/bhO3/bhO3.h"
+#include "bh_controller.h"
+#include "memory_system.h"
+#include "frontend.h"
+#include "impl/processor/bhO3/bhllc.h"
+#include "impl/processor/bhO3/bhO3.h"
 
 namespace Ramulator {
 

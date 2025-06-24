@@ -2,6 +2,7 @@
 #define RAMULATOR_CONTROLLER_LIVECONTROLLER_H
 
 #include <deque>
+#include <limits>
 #include <vector>
 
 #include <spdlog/spdlog.h>

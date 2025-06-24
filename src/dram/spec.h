@@ -138,7 +138,8 @@ class SpecDef : public std::vector<std::string_view>
 
     bool contains(std::string_view name) const
     {
-        return m_str2int_map.contains(name);
+        bool ret = (m_str2int_map.find(name) != m_str2int_map.end());
+        return ret;
     }
 
     std::string_view operator()(int i) const
@@ -171,7 +172,7 @@ class SpecDef : public std::vector<std::string_view>
 template <int N> class ImplDef : public std::array<std::string_view, N>
 {
   public:
-    consteval std::string_view operator[](int i) const
+    constexpr std::string_view operator[](int i) const
     {
         if (i < N)
         {
@@ -182,7 +183,7 @@ template <int N> class ImplDef : public std::array<std::string_view, N>
             throw "NON EXISTENT ID";
         }
     };
-    consteval int operator[](std::string_view name) const
+    constexpr int operator[](std::string_view name) const
     {
         for (int i = 0; i < N; i++)
         {

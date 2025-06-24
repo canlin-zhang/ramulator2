@@ -1,8 +1,9 @@
 set(TRANSLATION_FILES
   translation.h
+  register_translation.h
 
-  impl/no_translation.cpp
-  impl/random_translation.cpp
+  impl/no_translation.h impl/no_translation.cpp
+  impl/random_translation.h impl/random_translation.cpp
 )
 
 add_library(ramulator-translation STATIC ${TRANSLATION_FILES})

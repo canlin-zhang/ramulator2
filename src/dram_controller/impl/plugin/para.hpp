@@ -1,3 +1,4 @@
+#pragma once
 #include <vector>
 #include <unordered_map>
 #include <limits>
@@ -7,17 +8,19 @@
 #include "controller.h"
 #include "plugin.h"
 
-namespace Ramulator {
+namespace Ramulator
+{
 
-class PARA : public IControllerPlugin, public Implementation {
-  RAMULATOR_REGISTER_IMPLEMENTATION(IControllerPlugin, PARA, "PARA", "PARA.")
+  class PARA : public IControllerPlugin, public Implementation
+  {
+    RAMULATOR_REGISTER_IMPLEMENTATION(IControllerPlugin, PARA, "PARA", "PARA.")
 
   private:
-    IDRAM* m_dram = nullptr;
+    IDRAM *m_dram = nullptr;
 
     float m_pr_threshold;
 
-    int   m_seed;
+    int m_seed;
     std::mt19937 m_generator;
     std::uniform_real_distribution<float> m_distribution;
     bool m_is_debug = false;
@@ -27,7 +30,8 @@ class PARA : public IControllerPlugin, public Implementation {
     int m_row_level = -1;
 
   public:
-    void init() override { 
+    void init() override
+    {
       m_pr_threshold = param<float>("threshold").desc("Probability threshold for issuing neighbor row refresh").required();
       if (m_pr_threshold <= 0.0f || m_pr_threshold >= 1.0f)
         throw ConfigurationError("Invalid probability threshold ({}) for PARA!", m_pr_threshold);
@@ -39,11 +43,13 @@ class PARA : public IControllerPlugin, public Implementation {
       m_is_debug = param<bool>("debug").default_val(false);
     };
 
-    void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override {
+    void setup(IFrontEnd *frontend, IMemorySystem *memory_system) override
+    {
       m_ctrl = cast_parent<IDRAMController>();
       m_dram = m_ctrl->m_dram;
 
-      if (!m_dram->m_commands.contains("VRR")) {
+      if (!m_dram->m_commands.contains("VRR"))
+      {
         throw ConfigurationError("PARA is not compatible with the DRAM implementation that does not have Victim-Row-Refresh (VRR) command!");
       }
 
@@ -52,20 +58,22 @@ class PARA : public IControllerPlugin, public Implementation {
       m_row_level = m_dram->m_levels("row");
     };
 
-    void update(bool request_found, ReqBuffer::iterator& req_it) override {
-      if (request_found) {
+    void update(bool request_found, ReqBuffer::iterator &req_it) override
+    {
+      if (request_found)
+      {
         if (
-          m_dram->m_command_meta(req_it->command).is_opening && 
-          m_dram->m_command_scopes(req_it->command) == m_row_level
-        ) {
-          if (m_distribution(m_generator) < m_pr_threshold) {
+            m_dram->m_command_meta(req_it->command).is_opening &&
+            m_dram->m_command_scopes(req_it->command) == m_row_level)
+        {
+          if (m_distribution(m_generator) < m_pr_threshold)
+          {
             Request vrr_req(req_it->addr_vec, m_VRR_req_id);
             m_ctrl->priority_send(vrr_req);
           }
         }
       }
     };
+  };
 
-};
-
-}       // namespace Ramulator
+} // namespace Ramulator

@@ -13,26 +13,26 @@ set(CONTROLLER_FILES
   impl/generic_dram_controller.h impl/generic_dram_controller.cpp
   impl/prac_dram_controller.h impl/prac_dram_controller.cpp
 
-  impl/scheduler/bh_scheduler.cpp
-  impl/scheduler/blocking_scheduler.cpp
-  impl/scheduler/generic_scheduler.cpp
-  impl/scheduler/bliss_scheduler.cpp
-  impl/scheduler/prac_scheduler.cpp
+  impl/scheduler/bh_scheduler.h impl/scheduler/bh_scheduler.cpp
+  impl/scheduler/blocking_scheduler.h impl/scheduler/blocking_scheduler.cpp
+  impl/scheduler/generic_scheduler.h impl/scheduler/generic_scheduler.cpp
+  impl/scheduler/bliss_scheduler.h impl/scheduler/bliss_scheduler.cpp
+  impl/scheduler/prac_scheduler.h impl/scheduler/prac_scheduler.cpp
 
-  impl/refresh/all_bank_refresh.cpp
+  impl/refresh/all_bank_refresh.h impl/refresh/all_bank_refresh.cpp
 
-  impl/rowpolicy/basic_rowpolicies.cpp
+  impl/rowpolicy/basic_rowpolicies.h impl/rowpolicy/basic_rowpolicies.cpp
 
-  impl/plugin/trace_recorder.cpp
-  impl/plugin/cmd_counter.cpp
-  impl/plugin/para.cpp
-  impl/plugin/graphene.cpp
-  impl/plugin/oracle_rh.cpp
-  impl/plugin/twice.cpp
-  impl/plugin/hydra.cpp
-  impl/plugin/rrs.cpp
-  impl/plugin/aqua.cpp
-  impl/plugin/rfm_manager.cpp
+  impl/plugin/trace_recorder.hpp
+  impl/plugin/cmd_counter.hpp
+  impl/plugin/para.hpp
+  impl/plugin/graphene.hpp
+  impl/plugin/oracle_rh.hpp
+  impl/plugin/twice.hpp
+  impl/plugin/hydra.hpp
+  impl/plugin/rrs.hpp
+  impl/plugin/aqua.hpp
+  impl/plugin/rfm_manager.hpp
 
   impl/plugin/blockhammer/blockhammer_throttler.h
   impl/plugin/blockhammer/blockhammer_util.h

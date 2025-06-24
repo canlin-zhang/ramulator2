@@ -7,9 +7,9 @@
 #include <spdlog/sinks/stdout_color_sinks.h>
 #include <spdlog/spdlog.h>
 
-#include "base/base.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/plugin.h"
+#include "base.h"
+#include "controller.h"
+#include "plugin.h"
 
 namespace Ramulator
 {

@@ -3,7 +3,7 @@
 
 #include <spdlog/spdlog.h>
 
-#include "dram/node.h"
+#include "node.h"
 
 namespace Ramulator
 {

@@ -4,7 +4,7 @@
 #include "frontend/impl/processor/bhO3/bhllc.h"
 #include "memory_system/memory_system.h"
 
-#include "dram_controller/impl/plugin/prac/prac.h"
+#include "impl/plugin/prac/prac.h"
 
 namespace Ramulator
 {

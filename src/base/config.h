@@ -8,20 +8,15 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "base/base.h"
+#include "base.h"
 
 namespace Ramulator
 {
 namespace Config
 {
 
-/**
- * @brief    Load and parse the YAML configuration file for the simulation.
- *
- * @param    path           Path to the yaml file.
- * @return   YAML::Node     A YAML node containing all configurations.
- */
-YAML::Node parse_config_file(const std::string& path, const std::vector<std::string>& params);
+        namespace Details
+        {
 
 namespace Details
 {
@@ -34,13 +29,8 @@ namespace Details
  */
 YAML::Node load_config_file(const std::string& path_str);
 
-/**
- * @brief    Traverse the YAML document to load any included YAML files.
- *
- * @param    node           The current root node.
- * @param    verbose        Whether to print every node during the traversal.
- */
-void resolve_included_configs(YAML::Node node);
+        } // namespace Details
+    } // namespace Config
 
 /**
  * @brief    Override the config (add if non-existent) in the YAML file with the command line

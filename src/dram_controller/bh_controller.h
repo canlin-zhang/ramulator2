@@ -7,12 +7,12 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "base/base.h"
-#include "dram/dram.h"
-#include "dram_controller/bh_scheduler.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/plugin.h"
-#include "dram_controller/refresh.h"
+#include "base.h"
+#include "dram.h"
+#include "bh_scheduler.h"
+#include "controller.h"
+#include "plugin.h"
+#include "refresh.h"
 
 namespace Ramulator
 {
@@ -23,7 +23,7 @@ class IBHDRAMController : public IDRAMController
                                  "BHammer Memory Controller Interface");
 
   public:
-    IBHScheduler* m_scheduler = nullptr;
+    IBHScheduler *m_scheduler = nullptr;
     virtual void tick() = 0;
 
     template <class T> T* get_plugin()
@@ -40,8 +40,8 @@ class IBHDRAMController : public IDRAMController
     }
 
   protected:
-    std::vector<IControllerPlugin*> m_plugins;
-};
+    std::vector<IControllerPlugin *> m_plugins;
+  };
 
 } // namespace Ramulator
 

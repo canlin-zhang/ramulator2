@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "base/base.h"
+#include "base.h"
 
 namespace Ramulator
 {
@@ -15,7 +15,7 @@ class IRefreshManager
 
   public:
     virtual void tick() = 0;
-};
+  };
 
 } // namespace Ramulator
 

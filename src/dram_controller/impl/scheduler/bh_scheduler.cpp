@@ -1,8 +1,8 @@
 #include <vector>
 
-#include "base/base.h"
-#include "dram_controller/bh_controller.h"
-#include "dram_controller/bh_scheduler.h"
+#include "base.h"
+#include "bh_controller.h"
+#include "bh_scheduler.h"
 
 namespace Ramulator
 {

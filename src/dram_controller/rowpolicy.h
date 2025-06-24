@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-#include "base/base.h"
+#include "base.h"
 
 namespace Ramulator
 {
@@ -14,11 +14,11 @@ class IRowPolicy
     RAMULATOR_REGISTER_INTERFACE(IRowPolicy, "RowPolicy", "Row Policy Interface.");
 
   protected:
-    IDRAMController* m_ctrl = nullptr;
+    IDRAMController *m_ctrl = nullptr;
 
   public:
-    virtual void update(bool request_found, ReqBuffer::iterator& req_it) = 0;
-};
+    virtual void update(bool request_found, ReqBuffer::iterator &req_it) = 0;
+  };
 
 } // namespace Ramulator
 

@@ -1,9 +1,16 @@
-#include "base/config.h"
+#include "config.h"
 
 namespace Ramulator
 {
 
-namespace fs = std::filesystem;
+  YAML::Node Config::parse_config_file(const std::string &path_str, const std::vector<std::string> &params)
+  {
+    fs::path path(path_str);
+    if (!fs::exists(path))
+    {
+      spdlog::error("Config file {} does not exist!", path_str);
+      std::exit(-1);
+    }
 
 YAML::Node Config::parse_config_file(const std::string& path_str,
                                      const std::vector<std::string>& params)

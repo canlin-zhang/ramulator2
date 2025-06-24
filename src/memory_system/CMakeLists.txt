@@ -1,7 +1,4 @@
-add_library(ramulator-memorysystem OBJECT)
-
-target_sources(
-  ramulator-memorysystem PRIVATE
+set(MEMORYSYSTEM_FILES
   bh_memory_system.h
   memory_system.h
 
@@ -10,8 +7,16 @@ target_sources(
   impl/generic_DRAM_system.cpp
 )
 
-target_link_libraries(
-  ramulator
-  PRIVATE
-  ramulator-memorysystem
+add_library(ramulator-memorysystem STATIC ${MEMORYSYSTEM_FILES})
+
+target_link_libraries(ramulator-memorysystem PUBLIC
+  ramulator-base
+  ramulator-addrmapper
+  ramulator-dram
+  ramulator-frontend
+  ramulator-translation
+)
+
+target_include_directories(ramulator-memorysystem
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 )

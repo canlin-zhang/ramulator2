@@ -1,4 +1,4 @@
-#include "base/stats.h"
+#include "stats.h"
 
 namespace Ramulator
 {

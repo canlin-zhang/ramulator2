@@ -1,9 +1,9 @@
 #include <vector>
 
-#include "base/base.h"
-#include "dram_controller/bh_controller.h"
-#include "dram_controller/bh_scheduler.h"
-#include "dram_controller/impl/plugin/bliss/bliss.h"
+#include "base.h"
+#include "bh_controller.h"
+#include "bh_scheduler.h"
+#include "impl/plugin/bliss/bliss.h"
 
 namespace Ramulator
 {

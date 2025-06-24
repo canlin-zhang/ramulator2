@@ -6,8 +6,8 @@
 #include <unordered_map>
 #include <vector>
 
-#include "base/base.h"
-#include "base/request.h"
+#include "base.h"
+#include "request.h"
 
 namespace Ramulator
 {

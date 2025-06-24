@@ -1,9 +1,9 @@
 #include <iostream>
 #include <queue>
 
-#include "base/factory.h"
-#include "frontend/frontend.h"
-#include "memory_system/memory_system.h"
+#include "factory.h"
+#include "frontend.h"
+#include "memory_system.h"
 
 namespace Ramulator
 {

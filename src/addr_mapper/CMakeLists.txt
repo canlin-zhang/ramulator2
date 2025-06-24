@@ -1,16 +1,20 @@
-add_library(ramulator-addrmapper OBJECT)
-
-target_sources(
-  ramulator-addrmapper PRIVATE
-  addr_mapper.h 
+set(ADDRMAPPER_FILES
+  addr_mapper.h
 
   impl/linear_mappers.cpp
   impl/rit.cpp
   impl/rit.h
 )
 
-target_link_libraries(
-  ramulator
-  PRIVATE
-  ramulator-addrmapper
+add_library(ramulator-addrmapper STATIC ${ADDRMAPPER_FILES})
+
+target_link_libraries(ramulator-addrmapper PUBLIC
+  ramulator-base
+  ramulator-controller
+  yaml-cpp::yaml-cpp
+  spdlog::spdlog
+)
+
+target_include_directories(ramulator-addrmapper
+  PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}
 )

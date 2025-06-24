@@ -18,7 +18,7 @@ class CommandCounter : public IControllerPlugin, public Implementation
                                       "Counting the number of issued commands.")
 
   private:
-    IDRAM *m_dram = nullptr;
+    IDRAM* m_dram = nullptr;
 
     std::vector<std::string> m_commands_to_count;
     std::unordered_map<int, int> m_command_counters;

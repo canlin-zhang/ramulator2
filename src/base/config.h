@@ -15,8 +15,8 @@ namespace Ramulator
 namespace Config
 {
 
-        namespace Details
-        {
+namespace Details
+{
 
 namespace Details
 {
@@ -29,8 +29,8 @@ namespace Details
  */
 YAML::Node load_config_file(const std::string& path_str);
 
-        } // namespace Details
-    } // namespace Config
+} // namespace Details
+} // namespace Config
 
 /**
  * @brief    Override the config (add if non-existent) in the YAML file with the command line

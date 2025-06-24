@@ -17,7 +17,7 @@ class OracleRH : public IControllerPlugin, public Implementation
                                       "Oracle RowHammer defense")
 
   private:
-    IDRAM *m_dram = nullptr;
+    IDRAM* m_dram = nullptr;
 
     using BankACTCounter = std::unordered_map<Addr_t, int>;
     std::vector<BankACTCounter> m_table;

@@ -69,8 +69,8 @@ class FRFCFS : public IScheduler, public Implementation
     }
     else
     {
-      return req2;
+        return req2;
     }
-  }
+}
 
 } // namespace Ramulator

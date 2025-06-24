@@ -18,7 +18,7 @@ class RandomTranslation : public ITranslation, public Implementation
     IFrontEnd* m_frontend;
 
     m_logger = Logging::create_logger("RandomTranslation");
-  }
+}
 
     Addr_t m_max_paddr; // Max physical address
     Addr_t m_pagesize;  // Page size in bytes

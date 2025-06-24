@@ -15,7 +15,7 @@ class IRefreshManager
 
   public:
     virtual void tick() = 0;
-  };
+};
 
 } // namespace Ramulator
 

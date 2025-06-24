@@ -38,13 +38,13 @@ class IDRAMController : public Clocked<IDRAMController>
      * @return   true       Successful.
      * @return   false      Failed (e.g., buffer full).
      */
-    virtual bool send(Request &req) = 0;
+    virtual bool send(Request& req) = 0;
 
     /**
      * @brief       Send a high-priority request to the memory controller.
      *
      */
-    virtual bool priority_send(Request &req) = 0;
+    virtual bool priority_send(Request& req) = 0;
 
     /**
      * @brief       Ticks the memory controller.

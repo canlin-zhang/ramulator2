@@ -14,7 +14,7 @@
 namespace Ramulator
 {
 
-  using Logger_t = std::shared_ptr<spdlog::logger>;
+using Logger_t = std::shared_ptr<spdlog::logger>;
 
 class Logging
 {
@@ -44,10 +44,10 @@ class Logging
 
   public:
     Logging() = delete;
-    Logging(const Logging &) = delete;
-    void operator=(const Logging &) = delete;
-    Logging(Logging &&) = delete;
-  };
+    Logging(const Logging&) = delete;
+    void operator=(const Logging&) = delete;
+    Logging(Logging&&) = delete;
+};
 
 } // namespace Ramulator
 

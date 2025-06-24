@@ -18,7 +18,7 @@ class IFrontEnd : public Clocked<IFrontEnd>, public TopLevel<IFrontEnd>
     friend class Factory;
 
   protected:
-    IMemorySystem *m_memory_system;
+    IMemorySystem* m_memory_system;
     uint m_clock_ratio = 1;
 
   public:

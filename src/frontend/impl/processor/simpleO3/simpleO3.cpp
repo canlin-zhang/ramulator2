@@ -107,30 +107,49 @@ class SimpleO3 final : public IFrontEnd, public Implementation
 
     void tick() override
     {
-        m_clk++;
+        // register_stat(m_cores[core_id]->s_insts_retired).name("cycles_retired_core_{}", core_id);
+        register_stat(m_cores[core_id]->s_cycles_recorded).name("cycles_recorded_core_{}", core_id);
+        register_stat(m_cores[core_id]->s_mem_access_cycles)
+            .name("memory_access_cycles_recorded_core_{}", core_id);
+    }
+}
 
-        if (m_clk % 10000000 == 0)
-        {
-            m_logger->info("Processor Heartbeat {} cycles.", m_clk);
-        }
+void SimpleO3::tick()
+{
+    m_clk++;
 
-        m_llc->tick();
-        for (auto core : m_cores)
-        {
-            core->tick();
-        }
+    if (m_clk % 10000000 == 0)
+    {
+        m_logger->info("Processor Heartbeat {} cycles.", m_clk);
     }
 
     void receive(Request& req)
     {
-        m_llc->receive(req);
+        core->tick();
+    }
+}
 
-        // TODO: LLC latency for the core to receive the request?
-        for (auto r : m_llc->m_receive_requests[req.addr])
+void SimpleO3::receive(Request& req)
+{
+    m_llc->receive(req);
+
+    // TODO: LLC latency for the core to receive the request?
+    for (auto r : m_llc->m_receive_requests[req.addr])
+    {
+        r.arrive = req.arrive;
+        r.depart = req.depart;
+        m_cores[r.source_id]->receive(r);
+    }
+    m_llc->m_receive_requests[req.addr].clear();
+}
+
+bool SimpleO3::is_finished()
+{
+    for (auto core : m_cores)
+    {
+        if (!(core->reached_expected_num_insts))
         {
-            r.arrive = req.arrive;
-            r.depart = req.depart;
-            m_cores[r.source_id]->receive(r);
+            return false;
         }
         m_llc->m_receive_requests[req.addr].clear();
     };

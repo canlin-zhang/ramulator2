@@ -336,7 +336,7 @@ class GenericDRAMController final : public IDRAMController, public Implementatio
             }
         }
     }
-  }
+}
 
     /**
      * @brief    Helper function to serve the completed read requests
@@ -395,7 +395,7 @@ class GenericDRAMController final : public IDRAMController, public Implementatio
             }
         }
     };
-  }
+}
 
     /**
      * @brief    Helper function to find a request to schedule from the buffers.

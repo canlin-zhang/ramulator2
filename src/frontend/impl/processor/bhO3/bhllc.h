@@ -20,8 +20,8 @@
 namespace Ramulator
 {
 
-  DECLARE_DEBUG_FLAG(DBHO3LLC);
-  // ENABLE_DEBUG_FLAG(DBHO3LLC);
+DECLARE_DEBUG_FLAG(DBHO3LLC);
+// ENABLE_DEBUG_FLAG(DBHO3LLC);
 
 class BHO3LLC : public Clocked<BHO3LLC>
 {
@@ -53,7 +53,7 @@ class BHO3LLC : public Clocked<BHO3LLC>
     // should be sent back to the core (calls the callback)
     std::list<std::pair<Clk_t, Request>> m_hit_list;
 
-    IMemorySystem *m_memory_system;
+    IMemorySystem* m_memory_system;
 
     Logger_t m_logger;
 
@@ -104,8 +104,8 @@ class BHO3LLC : public Clocked<BHO3LLC>
     void connect_memory_system(IMemorySystem* memory_system);
 
     void tick();
-    bool send(Request &req);
-    void receive(Request &req);
+    bool send(Request& req);
+    void receive(Request& req);
 
     void serialize(std::string serialization_filename);
     void deserialize(std::string serialization_filename);
@@ -133,15 +133,15 @@ class BHO3LLC : public Clocked<BHO3LLC>
         return (addr & ~(m_linesize_bytes - 1l));
     }
 
-    CacheSet_t &get_set(Addr_t addr);
-    CacheSet_t::iterator allocate_line(CacheSet_t &set, Addr_t addr);
-    bool need_eviction(const CacheSet_t &set, Addr_t addr);
-    void evict_line(CacheSet_t &set, CacheSet_t::iterator victim_it);
+    CacheSet_t& get_set(Addr_t addr);
+    CacheSet_t::iterator allocate_line(CacheSet_t& set, Addr_t addr);
+    bool need_eviction(const CacheSet_t& set, Addr_t addr);
+    void evict_line(CacheSet_t& set, CacheSet_t::iterator victim_it);
 
-    CacheSet_t::iterator check_set_hit(CacheSet_t &set, Addr_t addr);
+    CacheSet_t::iterator check_set_hit(CacheSet_t& set, Addr_t addr);
     MSHR_t::iterator check_mshr_hit(Addr_t addr);
-    std::unordered_set<uint32_t> &get_bank_blacklist(Request &req);
-  };
+    std::unordered_set<uint32_t>& get_bank_blacklist(Request& req);
+};
 
 } // namespace Ramulator
 

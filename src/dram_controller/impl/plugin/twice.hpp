@@ -16,7 +16,7 @@ class TWiCeIdeal : public IControllerPlugin, public Implementation
                                       "Idealized TWiCe.")
 
   private:
-    IDRAM *m_dram = nullptr;
+    IDRAM* m_dram = nullptr;
 
     struct TwiCeEntry
     {
@@ -88,7 +88,7 @@ class TWiCeIdeal : public IControllerPlugin, public Implementation
             m_twice_table.push_back(bank_twice_table);
         }
     };
-  };
+};
 
     void update(bool request_found, ReqBuffer::iterator& req_it) override
     {

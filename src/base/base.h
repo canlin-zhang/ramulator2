@@ -29,11 +29,11 @@
 namespace Ramulator
 {
 
-  DECLARE_DEBUG_FLAG(DINIT);
-  ENABLE_DEBUG_FLAG(DINIT);
+DECLARE_DEBUG_FLAG(DINIT);
+ENABLE_DEBUG_FLAG(DINIT);
 
-  class IFrontEnd;
-  class IMemorySystem;
+class IFrontEnd;
+class IMemorySystem;
 
 /**
  * @brief     Base class for concrete implementation of an interface in Ramulator.
@@ -358,7 +358,7 @@ class Implementation
 template <class T> class TopLevel
 {
   protected:
-    std::vector<Implementation *> m_components;
+    std::vector<Implementation*> m_components;
 
   public:
     void gather_components()
@@ -430,9 +430,9 @@ template <class T> class TopLevel
     }
 
   private:
-    TopLevel() {};
+    TopLevel(){};
     friend T;
-  };
+};
 
 } // namespace Ramulator
 

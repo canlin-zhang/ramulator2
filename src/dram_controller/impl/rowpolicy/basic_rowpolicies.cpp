@@ -43,7 +43,7 @@ class ClosedRowPolicy : public IRowPolicy, public Implementation
     int m_num_banks = -1;
 
     if (!request_found)
-      return;
+        return;
 
     if (m_dram->m_command_meta(req_it->command).is_closing ||
         m_dram->m_command_meta(req_it->command).is_refreshing) // PRE or REF

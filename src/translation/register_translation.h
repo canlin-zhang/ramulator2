@@ -4,10 +4,10 @@
 
 namespace Ramulator
 {
-    void register_translation()
-    {
-        // Register translations
-        (void)&NoTranslation::init;
-        (void)&RandomTranslation::init;
-    }
+void register_translation()
+{
+    // Register translations
+    (void)&NoTranslation::init;
+    (void)&RandomTranslation::init;
+}
 } // namespace Ramulator

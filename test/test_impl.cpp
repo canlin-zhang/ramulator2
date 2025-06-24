@@ -12,7 +12,7 @@ class TestImpl2 : public TestIfce, public Implementation
     void init() override
     {
     }
-  };
+};
 
 class TestImpl : public TestIfce, public Implementation
 {
@@ -43,6 +43,6 @@ class TestImpl : public TestIfce, public Implementation
         // int sgi = param_group("example_group").param<int>("int_param").default_val(65);
         // std::cout << sgi << std::endl;
     }
-  };
+};
 
 } // namespace Ramulator

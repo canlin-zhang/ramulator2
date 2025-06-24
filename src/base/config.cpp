@@ -8,8 +8,8 @@ namespace Ramulator
     fs::path path(path_str);
     if (!fs::exists(path))
     {
-      spdlog::error("Config file {} does not exist!", path_str);
-      std::exit(-1);
+        spdlog::error("Config file {} does not exist!", path_str);
+        std::exit(-1);
     }
 
 YAML::Node Config::parse_config_file(const std::string& path_str,

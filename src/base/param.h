@@ -27,7 +27,7 @@ class _ParamGroupChainer
     YAML::Node _config;
     const std::string _impl_name;
 
-    Params &_params;
+    Params& _params;
 
     std::string _group_prefix = "";
 
@@ -73,7 +73,7 @@ class _ParamGroupChainer
         _set_group(group_name);
         return *this;
     };
-  };
+};
 
 template <typename T> class _ParamChainer
 {
@@ -81,10 +81,10 @@ template <typename T> class _ParamChainer
     friend _ParamGroupChainer;
 
   private:
-    const YAML::Node &_config;
+    const YAML::Node& _config;
     const std::string _impl_name;
 
-    Params &_params;
+    Params& _params;
 
     std::string _name;
     std::string _name_prefix;
@@ -252,7 +252,7 @@ class Params
                                       m_impl_name, param_name);
         }
     }
-  };
+};
 
 template <typename T> _ParamChainer<T> _ParamGroupChainer::param(std::string param_name)
 {

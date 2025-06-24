@@ -18,9 +18,9 @@ class AQUA : public IControllerPlugin, public Implementation
     RAMULATOR_REGISTER_IMPLEMENTATION(IControllerPlugin, AQUA, "AQUA", "AQUA.")
 
   private:
-    IDRAM *m_dram = nullptr;
-    LinearMapperBase_with_rit *m_addr_mapper = nullptr;
-    ITranslation *m_translation = nullptr;
+    IDRAM* m_dram = nullptr;
+    LinearMapperBase_with_rit* m_addr_mapper = nullptr;
+    ITranslation* m_translation = nullptr;
     DeviceConfig m_cfg;
 
     Clk_t m_clk = 0;
@@ -409,6 +409,6 @@ class AQUA : public IControllerPlugin, public Implementation
             }
         }
     }
-  };
+};
 
 } // namespace Ramulator

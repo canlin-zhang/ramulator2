@@ -2,8 +2,8 @@
 
 namespace Ramulator
 {
-  void AllBankRefresh::setup(IFrontEnd *frontend, IMemorySystem *memory_system)
-  {
+void AllBankRefresh::setup(IFrontEnd* frontend, IMemorySystem* memory_system)
+{
     m_dram = m_ctrl->m_dram;
 
 namespace Ramulator
@@ -19,10 +19,10 @@ class AllBankRefresh : public IRefreshManager, public Implementation
     IDRAMController* m_ctrl;
 
     m_next_refresh_cycle = m_nrefi;
-  }
+}
 
-  void AllBankRefresh::tick()
-  {
+void AllBankRefresh::tick()
+{
     m_clk++;
 
   public:

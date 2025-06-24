@@ -18,8 +18,8 @@ class Implementation;
 class StatWrapperBase
 {
   public:
-    virtual void emit_to(YAML::Emitter &emitter) = 0;
-  };
+    virtual void emit_to(YAML::Emitter& emitter) = 0;
+};
 
 template <typename T> class StatWrapper;
 
@@ -29,26 +29,26 @@ class Stats
     friend YAML::Emitter& operator<<(YAML::Emitter& emitter, const Stats& s);
 
   private:
-    Registry_t<StatWrapperBase *> _registry;
+    Registry_t<StatWrapperBase*> _registry;
 
   public:
     bool is_empty()
     {
         return _registry.size() == 0;
     }
-  };
+};
 
 template <typename T> class StatWrapper : public StatWrapperBase
 {
     // static_assert(std::is_arithmetic_v<T>, "Only arithmetic types are allowed for Statistics!");
 
   private:
-    std::variant<T *, std::vector<T> *> _ref;
+    std::variant<T*, std::vector<T>*> _ref;
     std::string _name;
     std::string _desc;
 
-    const Implementation &_impl;
-    Stats &_stats;
+    const Implementation& _impl;
+    Stats& _stats;
 
   public:
     StatWrapper(T& val, const Implementation& impl, Stats& stats)
@@ -104,7 +104,7 @@ template <typename T> class StatWrapper : public StatWrapperBase
             emitter << YAML::EndSeq;
         }
     };
-  };
+};
 
 } // namespace Ramulator
 

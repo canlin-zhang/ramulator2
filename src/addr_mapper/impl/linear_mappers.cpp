@@ -55,7 +55,7 @@ class LinearMapperBase : public IAddrMapper
         // Assume column is always the last level
         m_col_bits_idx = m_num_levels - 1;
     }
-  }
+}
 
 class ChRaBaRoCo final : public LinearMapperBase, public Implementation
 {

@@ -28,7 +28,7 @@ class BLISSScheduler : public IBHScheduler, public Implementation
     void init() override
     {
     }
-  }
+}
 
     void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override
     {
@@ -125,8 +125,8 @@ class BLISSScheduler : public IBHScheduler, public Implementation
     }
     else
     {
-      return req2;
+        return req2;
     }
-  }
+}
 
 } // namespace Ramulator

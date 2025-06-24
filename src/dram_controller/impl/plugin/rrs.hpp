@@ -16,8 +16,8 @@ class RRS : public IControllerPlugin, public Implementation
     RAMULATOR_REGISTER_IMPLEMENTATION(IControllerPlugin, RRS, "RRS", "Randomized Row-Swap.")
 
   private:
-    IDRAM *m_dram = nullptr;
-    LinearMapperBase_with_rit *m_addr_mapper = nullptr;
+    IDRAM* m_dram = nullptr;
+    LinearMapperBase_with_rit* m_addr_mapper = nullptr;
 
     int m_clk = 0;
 

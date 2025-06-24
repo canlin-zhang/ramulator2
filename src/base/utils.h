@@ -12,21 +12,21 @@ namespace Ramulator
  *     Utility Functions for Parsing Configs
  ***********************************************/
 
-  /**
-   * @brief    Parse capacity strings (e.g., KB, MB) into the number of bytes
-   *
-   * @param    size_str       A capacity string (e.g., "8KB", "64MB").
-   * @return   size_t         The number of bytes.
-   */
-  size_t parse_capacity_str(std::string size_str);
+/**
+ * @brief    Parse capacity strings (e.g., KB, MB) into the number of bytes
+ *
+ * @param    size_str       A capacity string (e.g., "8KB", "64MB").
+ * @return   size_t         The number of bytes.
+ */
+size_t parse_capacity_str(std::string size_str);
 
-  /**
-   * @brief    Parse frequency strings (e.g., MHz, GHz) into MHz
-   *
-   * @param    size_str       A capacity string (e.g., "4GHz", "3500MHz").
-   * @return   size_t         The number of bytes.
-   */
-  size_t parse_frequency_str(std::string size_str);
+/**
+ * @brief    Parse frequency strings (e.g., MHz, GHz) into MHz
+ *
+ * @param    size_str       A capacity string (e.g., "4GHz", "3500MHz").
+ * @return   size_t         The number of bytes.
+ */
+size_t parse_frequency_str(std::string size_str);
 
 /**
  * @brief Convert a timing constraint in nanoseconds into number of cycles according to JEDEC

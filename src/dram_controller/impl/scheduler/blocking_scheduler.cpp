@@ -26,7 +26,7 @@ class BlockingScheduler : public IBHScheduler, public Implementation
     void init() override
     {
     }
-  }
+}
 
     void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override
     {

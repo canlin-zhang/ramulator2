@@ -15,7 +15,7 @@ class Graphene : public IControllerPlugin, public Implementation
     RAMULATOR_REGISTER_IMPLEMENTATION(IControllerPlugin, Graphene, "Graphene", "Graphene.")
 
   private:
-    IDRAM *m_dram = nullptr;
+    IDRAM* m_dram = nullptr;
 
     int m_clk = -1;
 
@@ -220,6 +220,6 @@ class Graphene : public IControllerPlugin, public Implementation
             }
         }
     }
-  };
+};
 
 } // namespace Ramulator

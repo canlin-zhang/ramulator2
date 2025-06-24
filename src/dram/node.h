@@ -7,8 +7,8 @@
 #include <map>
 #include <vector>
 
-#include "type.h"
 #include "spec.h"
+#include "type.h"
 
 namespace Ramulator
 {

@@ -73,8 +73,8 @@ class Factory
     static Implementation* create_implementation(std::string ifce_name, const YAML::Node& config,
                                                  Implementation* parent);
 
-    static IFrontEnd *create_frontend(const YAML::Node &config);
-    static IMemorySystem *create_memory_system(const YAML::Node &config);
+    static IFrontEnd* create_frontend(const YAML::Node& config);
+    static IMemorySystem* create_memory_system(const YAML::Node& config);
 
     /**
      * @brief     Prints all registered interfaces and classes.
@@ -85,10 +85,10 @@ class Factory
     // Hide all constructors
   public:
     Factory() = delete;
-    Factory(const Factory &) = delete;
-    void operator=(const Factory &) = delete;
-    Factory(Factory &&) = delete;
-  };
+    Factory(const Factory&) = delete;
+    void operator=(const Factory&) = delete;
+    Factory(Factory&&) = delete;
+};
 
 } // namespace Ramulator
 

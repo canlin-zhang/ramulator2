@@ -5,9 +5,9 @@
 #include <spdlog/spdlog.h>
 
 #include "exception.h"
-#include "utils.h"
 #include "impl/processor/simpleO3/core.h"
 #include "impl/processor/simpleO3/llc.h"
+#include "utils.h"
 
 namespace Ramulator
 {

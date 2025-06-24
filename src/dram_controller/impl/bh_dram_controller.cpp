@@ -49,7 +49,7 @@ void BHDRAMController::setup(IFrontEnd* frontend, IMemorySystem* memory_system)
         register_stat(s_core_row_conflicts[i]).name("controller_core_row_conflicts_{}", i);
     }
 
-    m_priority_buffer.max_size = INT_MAX;
+    m_priority_buffer.max_size = std::numeric_limits<size_t>::max();
 
     register_stat(s_num_row_hits).name("controller_num_row_hits");
     register_stat(s_num_row_misses).name("controller_num_row_misses");

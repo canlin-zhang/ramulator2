@@ -5,6 +5,7 @@
 #include <deque>
 #include <functional>
 #include <map>
+#include <type_traits>
 #include <vector>
 
 #include "spec.h"
@@ -14,11 +15,6 @@ namespace Ramulator
 {
 
 class IDRAM;
-
-template <typename T> concept IsDRAMSpec = requires(T t)
-{
-    typename T::Node;
-};
 
 // CRTP class defnition is not complete, so we cannot have something nice like:
 // template<typename T>
@@ -30,7 +26,7 @@ template <typename T> concept IsDRAMSpec = requires(T t)
  * @brief     CRTP-ish (?) base class of a DRAM Device Node
  *
  */
-template <IsDRAMSpec T> struct DRAMNodeBase
+template <typename T, typename = std::void_t<typename T::Node>> struct DRAMNodeBase
 {
     using NodeType = typename T::Node;
     NodeType* m_parent_node = nullptr;

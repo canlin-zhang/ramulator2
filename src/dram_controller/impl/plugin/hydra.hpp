@@ -660,7 +660,7 @@ class Hydra : public IControllerPlugin, public Implementation
         }
         else if (m_rcc_policy == "MIN_COUNT")
         {
-            int min_count = INT_MAX;
+            int min_count = std::numeric_limits<int>::max();
             for (auto it = row_count_cache[rank_id][rcc_index].begin();
                  it != row_count_cache[rank_id][rcc_index].end(); it++)
             {

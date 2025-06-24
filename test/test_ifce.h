@@ -6,10 +6,10 @@
 namespace Ramulator
 {
 
-  class TestIfce
-  {
+class TestIfce
+{
     RAMULATOR_REGISTER_INTERFACE(TestIfce, "TestIfce", "A test example of an interface class.")
-  };
+};
 
 } // namespace Ramulator
 

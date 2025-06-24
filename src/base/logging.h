@@ -1,12 +1,12 @@
 #ifndef RAMULATOR_BASE_LOGGING_H
 #define RAMULATOR_BASE_LOGGING_H
 
-#include <spdlog/spdlog.h>
 #include <spdlog/sinks/stdout_color_sinks.h>
+#include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "exception.h"
 
@@ -14,10 +14,10 @@
 namespace Ramulator
 {
 
-  using Logger_t = std::shared_ptr<spdlog::logger>;
+using Logger_t = std::shared_ptr<spdlog::logger>;
 
-  class Logging
-  {
+class Logging
+{
   private:
     inline static const std::string default_logger_pattern = "[%n] %^[%l]%$ %v";
 
@@ -44,10 +44,10 @@ namespace Ramulator
 
   public:
     Logging() = delete;
-    Logging(const Logging &) = delete;
-    void operator=(const Logging &) = delete;
-    Logging(Logging &&) = delete;
-  };
+    Logging(const Logging&) = delete;
+    void operator=(const Logging&) = delete;
+    Logging(Logging&&) = delete;
+};
 
 } // namespace Ramulator
 

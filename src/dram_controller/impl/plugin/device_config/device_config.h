@@ -4,10 +4,12 @@
 #include "base.h"
 #include "controller.h"
 
-namespace Ramulator {
+namespace Ramulator
+{
 
-class DeviceConfig {
-public: 
+class DeviceConfig
+{
+  public:
     int m_channel_level;
     int m_rank_level;
     int m_bank_level;
@@ -29,11 +31,11 @@ public:
     DeviceConfig();
     DeviceConfig(IDRAMController* ctrl);
     ~DeviceConfig();
-    
+
     void set_device(IDRAMController* ctrl);
     int get_flat_bank_id(const Request& req);
 };
 
-}
+} // namespace Ramulator
 
-#endif  // RAMULATOR_PLUGUTIL_DEVICECFG_H 
+#endif // RAMULATOR_PLUGUTIL_DEVICECFG_H

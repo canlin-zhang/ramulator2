@@ -10,8 +10,8 @@
 namespace Ramulator
 {
 
-  class IAddrMapper
-  {
+class IAddrMapper
+{
     RAMULATOR_REGISTER_INTERFACE(IAddrMapper, "AddrMapper", "Memory Controller Address Mapper");
 
   public:
@@ -19,8 +19,8 @@ namespace Ramulator
      * @brief  Applies the address mapping to a physical address and returns the DRAM address vector
      *
      */
-    virtual void apply(Request &req) = 0;
-  };
+    virtual void apply(Request& req) = 0;
+};
 
 } // namespace Ramulator
 

@@ -1,17 +1,17 @@
 #ifndef RAMULATOR_FRONTEND_PROCESSOR_BH_O3_LLC_H
 #define RAMULATOR_FRONTEND_PROCESSOR_BH_O3_LLC_H
 
-#include <vector>
+#include <fstream>
+#include <iostream>
 #include <list>
 #include <unordered_map>
-#include <iostream>
-#include <fstream>
+#include <vector>
 
+#include "bh_memory_system.h"
 #include "clocked.h"
 #include "debug.h"
-#include "type.h"
 #include "request.h"
-#include "bh_memory_system.h"
+#include "type.h"
 
 // BH Changes Begin
 #include <unordered_set>
@@ -20,23 +20,24 @@
 namespace Ramulator
 {
 
-  DECLARE_DEBUG_FLAG(DBHO3LLC);
-  // ENABLE_DEBUG_FLAG(DBHO3LLC);
+DECLARE_DEBUG_FLAG(DBHO3LLC);
+// ENABLE_DEBUG_FLAG(DBHO3LLC);
 
-  class BHO3LLC : public Clocked<BHO3LLC>
-  {
+class BHO3LLC : public Clocked<BHO3LLC>
+{
     friend class BHO3;
 
     struct Line
     {
-      Addr_t addr = -1;
-      Addr_t tag = -1;
-      bool dirty = false;
-      bool ready = false; // Whether this line is ready (i.e., is still inflight?)
+        Addr_t addr = -1;
+        Addr_t tag = -1;
+        bool dirty = false;
+        bool ready = false; // Whether this line is ready (i.e., is still inflight?)
     };
 
   private:
-    using CacheSet_t = std::list<Line>; // LRU queue for the set. The head of the list is the least-recently-used way.
+    using CacheSet_t = std::list<Line>; // LRU queue for the set. The head of the list is the
+                                        // least-recently-used way.
     std::unordered_map<int, CacheSet_t> m_cache_sets;
 
     using MSHREntry_t = std::pair<Addr_t, CacheSet_t::iterator>;
@@ -52,7 +53,7 @@ namespace Ramulator
     // should be sent back to the core (calls the callback)
     std::list<std::pair<Clk_t, Request>> m_hit_list;
 
-    IMemorySystem *m_memory_system;
+    IMemorySystem* m_memory_system;
 
     Logger_t m_logger;
 
@@ -98,12 +99,13 @@ namespace Ramulator
     // BH Changes End
 
   public:
-    BHO3LLC(int latency, int size_bytes, int linesize_bytes, int associativity, int num_mshrs, int num_cores);
-    void connect_memory_system(IMemorySystem *memory_system);
+    BHO3LLC(int latency, int size_bytes, int linesize_bytes, int associativity, int num_mshrs,
+            int num_cores);
+    void connect_memory_system(IMemorySystem* memory_system);
 
     void tick();
-    bool send(Request &req);
-    void receive(Request &req);
+    bool send(Request& req);
+    void receive(Request& req);
 
     void serialize(std::string serialization_filename);
     void deserialize(std::string serialization_filename);
@@ -118,19 +120,28 @@ namespace Ramulator
     bool clflush(Addr_t addr);
     // BH Changes End
   private:
-    int get_index(Addr_t addr) { return (addr >> m_index_offset) & m_index_mask; }
-    Addr_t get_tag(Addr_t addr) { return (addr >> m_tag_offset); }
-    Addr_t align(Addr_t addr) { return (addr & ~(m_linesize_bytes - 1l)); }
+    int get_index(Addr_t addr)
+    {
+        return (addr >> m_index_offset) & m_index_mask;
+    }
+    Addr_t get_tag(Addr_t addr)
+    {
+        return (addr >> m_tag_offset);
+    }
+    Addr_t align(Addr_t addr)
+    {
+        return (addr & ~(m_linesize_bytes - 1l));
+    }
 
-    CacheSet_t &get_set(Addr_t addr);
-    CacheSet_t::iterator allocate_line(CacheSet_t &set, Addr_t addr);
-    bool need_eviction(const CacheSet_t &set, Addr_t addr);
-    void evict_line(CacheSet_t &set, CacheSet_t::iterator victim_it);
+    CacheSet_t& get_set(Addr_t addr);
+    CacheSet_t::iterator allocate_line(CacheSet_t& set, Addr_t addr);
+    bool need_eviction(const CacheSet_t& set, Addr_t addr);
+    void evict_line(CacheSet_t& set, CacheSet_t::iterator victim_it);
 
-    CacheSet_t::iterator check_set_hit(CacheSet_t &set, Addr_t addr);
+    CacheSet_t::iterator check_set_hit(CacheSet_t& set, Addr_t addr);
     MSHR_t::iterator check_mshr_hit(Addr_t addr);
-    std::unordered_set<uint32_t> &get_bank_blacklist(Request &req);
-  };
+    std::unordered_set<uint32_t>& get_bank_blacklist(Request& req);
+};
 
 } // namespace Ramulator
 

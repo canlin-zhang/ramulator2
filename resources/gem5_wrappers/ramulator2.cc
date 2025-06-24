@@ -2,8 +2,8 @@
 
 #include "base/callback.hh"
 #include "base/trace.hh"
-#include "debug/Ramulator2.hh"
 #include "debug/Drain.hh"
+#include "debug/Ramulator2.hh"
 #include "sim/system.hh"
 
 // spdlog collides with gem5...
@@ -11,8 +11,8 @@
 #undef warn
 
 #include "ramulator2/src/base/base.h"
-#include "ramulator2/src/base/request.h"
 #include "ramulator2/src/base/config.h"
+#include "ramulator2/src/base/request.h"
 #include "ramulator2/src/frontend/frontend.h"
 #include "ramulator2/src/memory_system/memory_system.h"
 
@@ -22,31 +22,31 @@ namespace gem5
 namespace memory
 {
 
-Ramulator2::Ramulator2(const Params &p) :
-    AbstractMemory(p),
-    port(name() + ".port", *this),
-    config_path(p.config_path),
-    retryReq(false), retryResp(false), startTick(0),
-    nbrOutstandingReads(0), nbrOutstandingWrites(0),
-    sendResponseEvent([this]{ sendResponse(); }, name()),
-    tickEvent([this]{ tick(); }, name())
+Ramulator2::Ramulator2(const Params& p)
+    : AbstractMemory(p), port(name() + ".port", *this), config_path(p.config_path), retryReq(false),
+      retryResp(false), startTick(0), nbrOutstandingReads(0), nbrOutstandingWrites(0),
+      sendResponseEvent([this] { sendResponse(); }, name()), tickEvent([this] { tick(); }, name())
 {
     DPRINTF(Ramulator2, "Instantiated Ramulator2 \n");
 
-    registerExitCallback([this]() { 
-        ramulator2_frontend->finalize();
-        ramulator2_memorysystem->finalize();
-    });
+    registerExitCallback(
+        [this]()
+        {
+            ramulator2_frontend->finalize();
+            ramulator2_memorysystem->finalize();
+        });
 }
 
-void
-Ramulator2::init()
+void Ramulator2::init()
 {
     AbstractMemory::init();
 
-    if (!port.isConnected()) {
+    if (!port.isConnected())
+    {
         fatal("Ramulator2 %s is unconnected!\n", name());
-    } else {
+    }
+    else
+    {
         port.sendRangeChange();
     }
 
@@ -62,8 +62,7 @@ Ramulator2::init()
     //           wrapper.burstSize(), system()->cacheLineSize());
 }
 
-void
-Ramulator2::startup()
+void Ramulator2::startup()
 {
     startTick = curTick();
 
@@ -71,13 +70,12 @@ Ramulator2::startup()
     schedule(tickEvent, clockEdge());
 }
 
-void
-Ramulator2::resetStats() {
+void Ramulator2::resetStats()
+{
     // wrapper.resetStats();
 }
 
-void
-Ramulator2::sendResponse()
+void Ramulator2::sendResponse()
 {
     assert(!retryResp);
     assert(!responseQueue.empty());
@@ -85,19 +83,21 @@ Ramulator2::sendResponse()
     DPRINTF(Ramulator2, "Attempting to send response\n");
 
     bool success = port.sendTimingResp(responseQueue.front());
-    if (success) {
+    if (success)
+    {
         responseQueue.pop_front();
 
         DPRINTF(Ramulator2, "Have %d read, %d write, %d responses outstanding\n",
-                nbrOutstandingReads, nbrOutstandingWrites,
-                responseQueue.size());
+                nbrOutstandingReads, nbrOutstandingWrites, responseQueue.size());
 
         if (!responseQueue.empty() && !sendResponseEvent.scheduled())
             schedule(sendResponseEvent, curTick());
 
         if (nbrOutstanding() == 0)
             signalDrainDone();
-    } else {
+    }
+    else
+    {
         retryResp = true;
 
         DPRINTF(Ramulator2, "Waiting for response retry\n");
@@ -106,43 +106,40 @@ Ramulator2::sendResponse()
     }
 }
 
-unsigned int
-Ramulator2::nbrOutstanding() const
+unsigned int Ramulator2::nbrOutstanding() const
 {
     return nbrOutstandingReads + nbrOutstandingWrites + responseQueue.size();
 }
 
-void
-Ramulator2::tick()
+void Ramulator2::tick()
 {
     // Only tick when it's timing mode
-    if (system()->isTimingMode()) {
+    if (system()->isTimingMode())
+    {
         ramulator2_memorysystem->tick();
 
         // is the connected port waiting for a retry, if so check the
         // state and send a retry if conditions have changed
-        if (retryReq) {
+        if (retryReq)
+        {
             retryReq = false;
             port.sendRetryReq();
         }
     }
 
-    schedule(tickEvent,
-        curTick() + ramulator2_memorysystem->get_tCK() * sim_clock::as_float::ns);
+    schedule(tickEvent, curTick() + ramulator2_memorysystem->get_tCK() * sim_clock::as_float::ns);
 }
 
-Tick
-Ramulator2::recvAtomic(PacketPtr pkt)
+Tick Ramulator2::recvAtomic(PacketPtr pkt)
 {
     panic_if(pkt->cacheResponding(), "Should not see packets where cache "
-             "is responding");
+                                     "is responding");
 
     access(pkt);
-    return 50000;   // Arbitary latency of 50ns
+    return 50000; // Arbitary latency of 50ns
 }
 
-void
-Ramulator2::recvFunctional(PacketPtr pkt)
+void Ramulator2::recvFunctional(PacketPtr pkt)
 {
     pkt->pushLabel(name());
     functionalAccess(pkt);
@@ -153,18 +150,18 @@ Ramulator2::recvFunctional(PacketPtr pkt)
     pkt->popLabel();
 }
 
-bool
-Ramulator2::recvTimingReq(PacketPtr pkt)
+bool Ramulator2::recvTimingReq(PacketPtr pkt)
 {
-    DPRINTF(Ramulator2, "recvTimingReq: request %s addr %#x size %d\n",
-            pkt->cmdString(), pkt->getAddr(), pkt->getSize());
+    DPRINTF(Ramulator2, "recvTimingReq: request %s addr %#x size %d\n", pkt->cmdString(),
+            pkt->getAddr(), pkt->getSize());
 
     panic_if(pkt->cacheResponding(), "Should not see packets where cache "
-             "is responding");
+                                     "is responding");
 
     panic_if(!(pkt->isRead() || pkt->isWrite()),
              "Should only see read and writes at memory controller, "
-             "saw %s to %#llx\n", pkt->cmdString(), pkt->getAddr());
+             "saw %s to %#llx\n",
+             pkt->cmdString(), pkt->getAddr());
 
     // we should not get a new request after committing to retry the
     // current one, but unfortunately the CPU violates this rule, so
@@ -173,12 +170,13 @@ Ramulator2::recvTimingReq(PacketPtr pkt)
         return false;
 
     bool enqueue_success = false;
-    if (pkt->isRead()) 
+    if (pkt->isRead())
     {
         // Generate ramulator READ request and try to send to ramulator's memory system
-        enqueue_success = ramulator2_frontend->
-            receive_external_requests(0, pkt->getAddr(), 0, 
-            [this](Ramulator::Request& req) {
+        enqueue_success = ramulator2_frontend->receive_external_requests(
+            0, pkt->getAddr(), 0,
+            [this](Ramulator::Request& req)
+            {
                 DPRINTF(Ramulator2, "Read to %ld completed.\n", req.addr);
                 auto& pkt_q = outstandingReads.find(req.addr)->second;
                 PacketPtr pkt = pkt_q.front();
@@ -192,7 +190,7 @@ Ramulator2::recvTimingReq(PacketPtr pkt)
                 accessAndRespond(pkt);
             });
 
-        if (enqueue_success) 
+        if (enqueue_success)
         {
             outstandingReads[pkt->getAddr()].push_back(pkt);
 
@@ -200,16 +198,19 @@ Ramulator2::recvTimingReq(PacketPtr pkt)
             // queue in the controller, and the response has been sent
             // back, note that this will differ for reads and writes
             ++nbrOutstandingReads;
-        } 
-        else 
+        }
+        else
         {
             retryReq = true;
         }
-    } else if (pkt->isWrite()) {
+    }
+    else if (pkt->isWrite())
+    {
         // Generate ramulator WRITE request and try to send to ramulator's memory system
-        enqueue_success = ramulator2_frontend->
-            receive_external_requests(1, pkt->getAddr(), 0, 
-            [this](Ramulator::Request& req) {
+        enqueue_success = ramulator2_frontend->receive_external_requests(
+            1, pkt->getAddr(), 0,
+            [this](Ramulator::Request& req)
+            {
                 DPRINTF(Ramulator2, "Write to %ld completed.\n", req.addr);
                 auto& pkt_q = outstandingWrites.find(req.addr)->second;
                 PacketPtr pkt = pkt_q.front();
@@ -223,7 +224,7 @@ Ramulator2::recvTimingReq(PacketPtr pkt)
                 accessAndRespond(pkt);
             });
 
-        if (enqueue_success) 
+        if (enqueue_success)
         {
             outstandingWrites[pkt->getAddr()].push_back(pkt);
 
@@ -231,12 +232,14 @@ Ramulator2::recvTimingReq(PacketPtr pkt)
 
             // perform the access for writes
             accessAndRespond(pkt);
-        } 
-        else 
+        }
+        else
         {
             retryReq = true;
         }
-    } else {
+    }
+    else
+    {
         // keep it simple and just respond if necessary
         accessAndRespond(pkt);
         return true;
@@ -245,8 +248,7 @@ Ramulator2::recvTimingReq(PacketPtr pkt)
     return enqueue_success;
 }
 
-void
-Ramulator2::recvRespRetry()
+void Ramulator2::recvRespRetry()
 {
     DPRINTF(Ramulator2, "Retrying\n");
 
@@ -255,8 +257,7 @@ Ramulator2::recvRespRetry()
     sendResponse();
 }
 
-void
-Ramulator2::accessAndRespond(PacketPtr pkt)
+void Ramulator2::accessAndRespond(PacketPtr pkt)
 {
     DPRINTF(Ramulator2, "Access for address %lld\n", pkt->getAddr());
 
@@ -265,7 +266,8 @@ Ramulator2::accessAndRespond(PacketPtr pkt)
     access(pkt);
 
     // turn packet around to go back to requestor if response expected
-    if (needsResponse) {
+    if (needsResponse)
+    {
         // access already turned the packet into a response
         assert(pkt->isResponse());
 
@@ -274,8 +276,7 @@ Ramulator2::accessAndRespond(PacketPtr pkt)
         // Here we reset the timing of the packet before sending it out.
         pkt->headerDelay = pkt->payloadDelay = 0;
 
-        DPRINTF(Ramulator2, "Queuing response for address %lld\n",
-                pkt->getAddr());
+        DPRINTF(Ramulator2, "Queuing response for address %lld\n", pkt->getAddr());
 
         // queue it to be sent back
         responseQueue.push_back(pkt);
@@ -284,36 +285,37 @@ Ramulator2::accessAndRespond(PacketPtr pkt)
         // to send a response, schedule an event
         if (!retryResp && !sendResponseEvent.scheduled())
             schedule(sendResponseEvent, time);
-    } else {
+    }
+    else
+    {
         // queue the packet for deletion
         pendingDelete.reset(pkt);
     }
 }
 
-
-Port&
-Ramulator2::getPort(const std::string &if_name, PortID idx)
+Port& Ramulator2::getPort(const std::string& if_name, PortID idx)
 {
-    if (if_name != "port") {
+    if (if_name != "port")
+    {
         return ClockedObject::getPort(if_name, idx);
-    } else {
+    }
+    else
+    {
         return port;
     }
 }
 
-DrainState
-Ramulator2::drain()
+DrainState Ramulator2::drain()
 {
     // check our outstanding reads and writes and if any they need to
     // drain
     return nbrOutstanding() != 0 ? DrainState::Draining : DrainState::Drained;
 }
 
-Ramulator2::MemorySystemPort::MemorySystemPort(const std::string& _name,
-                                 Ramulator2& _ramulator2)
+Ramulator2::MemorySystemPort::MemorySystemPort(const std::string& _name, Ramulator2& _ramulator2)
     : ResponsePort(_name), ramulator2(_ramulator2)
-{ }
-
+{
+}
 
 } // namespace memory
 } // namespace gem5

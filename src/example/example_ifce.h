@@ -1,17 +1,17 @@
-#ifndef     RAMULATOR_EXAMPLE_EXAMPLE_H
-#define     RAMULATOR_EXAMPLE_EXAMPLE_H
+#ifndef RAMULATOR_EXAMPLE_EXAMPLE_H
+#define RAMULATOR_EXAMPLE_EXAMPLE_H
 
 #include "base.h"
 
+namespace Ramulator
+{
 
-namespace Ramulator {
-
-class ExampleIfce {
-  RAMULATOR_REGISTER_INTERFACE(ExampleIfce, "ExampleInterface", "An example of an interface class.")
-
-
+class ExampleIfce
+{
+    RAMULATOR_REGISTER_INTERFACE(ExampleIfce, "ExampleInterface",
+                                 "An example of an interface class.")
 };
 
-}        // namespace Ramulator
+} // namespace Ramulator
 
-#endif   // RAMULATOR_EXAMPLE_EXAMPLE_H
+#endif // RAMULATOR_EXAMPLE_EXAMPLE_H

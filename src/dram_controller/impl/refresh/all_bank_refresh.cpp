@@ -2,8 +2,8 @@
 
 namespace Ramulator
 {
-  void AllBankRefresh::setup(IFrontEnd *frontend, IMemorySystem *memory_system)
-  {
+void AllBankRefresh::setup(IFrontEnd* frontend, IMemorySystem* memory_system)
+{
     m_dram = m_ctrl->m_dram;
 
     m_dram_org_levels = m_dram->m_levels.size();
@@ -13,29 +13,29 @@ namespace Ramulator
     m_ref_req_id = m_dram->m_requests("all-bank-refresh");
 
     m_next_refresh_cycle = m_nrefi;
-  }
+}
 
-  void AllBankRefresh::tick()
-  {
+void AllBankRefresh::tick()
+{
     m_clk++;
 
     if (m_clk == m_next_refresh_cycle)
     {
-      m_next_refresh_cycle += m_nrefi;
-      for (int r = 0; r < m_num_ranks; r++)
-      {
-        std::vector<int> addr_vec(m_dram_org_levels, -1);
-        addr_vec[0] = m_ctrl->m_channel_id;
-        addr_vec[1] = r;
-        Request req(addr_vec, m_ref_req_id);
-
-        bool is_success = m_ctrl->priority_send(req);
-        if (!is_success)
+        m_next_refresh_cycle += m_nrefi;
+        for (int r = 0; r < m_num_ranks; r++)
         {
-          throw std::runtime_error("Failed to send refresh!");
-        }
-      }
-    }
-  }
+            std::vector<int> addr_vec(m_dram_org_levels, -1);
+            addr_vec[0] = m_ctrl->m_channel_id;
+            addr_vec[1] = r;
+            Request req(addr_vec, m_ref_req_id);
 
+            bool is_success = m_ctrl->priority_send(req);
+            if (!is_success)
+            {
+                throw std::runtime_error("Failed to send refresh!");
+            }
+        }
+    }
 }
+
+} // namespace Ramulator

@@ -1,17 +1,17 @@
 #ifndef RAMULATOR_BASE_REQUEST_H
 #define RAMULATOR_BASE_REQUEST_H
 
-#include <vector>
 #include <list>
 #include <string>
+#include <vector>
 
 #include "base.h"
 
 namespace Ramulator
 {
 
-  struct Request
-  {
+struct Request
+{
     Addr_t addr = -1;
     AddrVec_t addr_vec{};
 
@@ -19,11 +19,11 @@ namespace Ramulator
     // 0 = Read, 1 = Write. The device spec defines all others
     struct Type
     {
-      enum : int
-      {
-        Read = 0,
-        Write,
-      };
+        enum : int
+        {
+            Read = 0,
+            Write,
+        };
     };
 
     int type_id = -1;   // An identifier for the type of the request
@@ -38,44 +38,53 @@ namespace Ramulator
 
     std::array<int, 4> scratchpad = {0}; // A scratchpad for the request
 
-    std::function<void(Request &)> callback;
+    std::function<void(Request&)> callback;
 
-    void *m_payload = nullptr; // Point to a generic payload
+    void* m_payload = nullptr; // Point to a generic payload
 
     Request(Addr_t addr, int type);
     Request(AddrVec_t addr_vec, int type);
-    Request(Addr_t addr, int type, int source_id, std::function<void(Request &)> callback);
-  };
+    Request(Addr_t addr, int type, int source_id, std::function<void(Request&)> callback);
+};
 
-  struct ReqBuffer
-  {
+struct ReqBuffer
+{
     std::list<Request> buffer;
     size_t max_size = 32;
 
     using iterator = std::list<Request>::iterator;
-    iterator begin() { return buffer.begin(); };
-    iterator end() { return buffer.end(); };
-
-    size_t size() const { return buffer.size(); }
-
-    bool enqueue(const Request &request)
+    iterator begin()
     {
-      if (buffer.size() <= max_size)
-      {
-        buffer.push_back(request);
-        return true;
-      }
-      else
-      {
-        return false;
-      }
+        return buffer.begin();
+    };
+    iterator end()
+    {
+        return buffer.end();
+    };
+
+    size_t size() const
+    {
+        return buffer.size();
+    }
+
+    bool enqueue(const Request& request)
+    {
+        if (buffer.size() <= max_size)
+        {
+            buffer.push_back(request);
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     void remove(iterator it)
     {
-      buffer.erase(it);
+        buffer.erase(it);
     }
-  };
+};
 
 } // namespace Ramulator
 

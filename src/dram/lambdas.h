@@ -2,9 +2,9 @@
 #define RAMULATOR_DRAM_LAMBDAS_LAMBDAS_H
 
 #include "lambdas/action.h"
+#include "lambdas/power.h"
 #include "lambdas/preq.h"
 #include "lambdas/rowhit.h"
 #include "lambdas/rowopen.h"
-#include "lambdas/power.h"
 
-#endif  // RAMULATOR_DRAM_LAMBDAS_LAMBDAS_H
+#endif // RAMULATOR_DRAM_LAMBDAS_LAMBDAS_H

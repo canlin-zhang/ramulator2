@@ -1,11 +1,12 @@
-#ifndef     RAMULATOR_FRONTEND_PROCESSOR_TRACE_H
-#define     RAMULATOR_FRONTEND_PROCESSOR_TRACE_H
+#ifndef RAMULATOR_FRONTEND_PROCESSOR_TRACE_H
+#define RAMULATOR_FRONTEND_PROCESSOR_TRACE_H
 
 #include <vector>
 
 #include "type.h"
 
-namespace Ramulator {
+namespace Ramulator
+{
 
 /**
  * @brief    Filtered trace for the SimpleO3 core
@@ -15,12 +16,14 @@ namespace Ramulator {
  * The writeback request is the eviction from L1L2 caused by the load.
  * The trace generator is responsible for modeling L1 and L2.
  */
-class SimpleO3Trace {
+class SimpleO3Trace
+{
   private:
-    struct Trace {
-      int bubble_count = 0;
-      Addr_t load_addr = -1;
-      Addr_t store_addr = -1;
+    struct Trace
+    {
+        int bubble_count = 0;
+        Addr_t load_addr = -1;
+        Addr_t store_addr = -1;
     };
     std::vector<Trace> m_trace;
 
@@ -30,13 +33,11 @@ class SimpleO3Trace {
     int m_load_type;
     int m_store_type;
 
-
   public:
     SimpleO3Trace(std::string file_path_str);
     void get_trace(int& bubble_count, Addr_t& load_addr, Addr_t& store_addr);
 };
 
-}        // namespace Ramulator
+} // namespace Ramulator
 
-
-#endif   // RAMULATOR_FRONTEND_PROCESSOR_TRACE_H
+#endif // RAMULATOR_FRONTEND_PROCESSOR_TRACE_H

@@ -1,18 +1,24 @@
-#ifndef     RAMULATOR_BHMEMORYSYSTEM_MEMORY_H
-#define     RAMULATOR_BHMEMORYSYSTEM_MEMORY_H
+#ifndef RAMULATOR_BHMEMORYSYSTEM_MEMORY_H
+#define RAMULATOR_BHMEMORYSYSTEM_MEMORY_H
 
-#include "memory_system.h"
 #include "dram.h"
+#include "memory_system.h"
 
-namespace Ramulator {
+namespace Ramulator
+{
 
-class IBHMemorySystem : public IMemorySystem {
-  RAMULATOR_REGISTER_INTERFACE(IBHMemorySystem, "BHMemorySystem", "BH Memory system interface (e.g., communicates between processor and memory controller).")
+class IBHMemorySystem : public IMemorySystem
+{
+    RAMULATOR_REGISTER_INTERFACE(
+        IBHMemorySystem, "BHMemorySystem",
+        "BH Memory system interface (e.g., communicates between processor and memory controller).")
   public:
-    virtual IDRAM* get_dram() { return nullptr; }
+    virtual IDRAM* get_dram()
+    {
+        return nullptr;
+    }
 };
 
-}        // namespace Ramulator
+} // namespace Ramulator
 
-
-#endif   // RAMULATOR_BHMEMORYSYSTEM_MEMORY_H
+#endif // RAMULATOR_BHMEMORYSYSTEM_MEMORY_H

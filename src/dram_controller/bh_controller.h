@@ -1,47 +1,47 @@
 #ifndef RAMULATOR_CONTROLLER_LIVECONTROLLER_H
 #define RAMULATOR_CONTROLLER_LIVECONTROLLER_H
 
-#include <vector>
 #include <deque>
+#include <vector>
 
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
 #include "base.h"
-#include "dram.h"
 #include "bh_scheduler.h"
 #include "controller.h"
+#include "dram.h"
 #include "plugin.h"
 #include "refresh.h"
 
 namespace Ramulator
 {
 
-  class IBHDRAMController : public IDRAMController
-  {
-    RAMULATOR_REGISTER_INTERFACE(IBHDRAMController, "BHDRAMController", "BHammer Memory Controller Interface");
+class IBHDRAMController : public IDRAMController
+{
+    RAMULATOR_REGISTER_INTERFACE(IBHDRAMController, "BHDRAMController",
+                                 "BHammer Memory Controller Interface");
 
   public:
-    IBHScheduler *m_scheduler = nullptr;
+    IBHScheduler* m_scheduler = nullptr;
     virtual void tick() = 0;
 
-    template <class T>
-    T *get_plugin()
+    template <class T> T* get_plugin()
     {
-      for (auto plugin : m_plugins)
-      {
-        T *cast = dynamic_cast<T *>(plugin);
-        if (cast)
+        for (auto plugin : m_plugins)
         {
-          return cast;
+            T* cast = dynamic_cast<T*>(plugin);
+            if (cast)
+            {
+                return cast;
+            }
         }
-      }
-      return nullptr;
+        return nullptr;
     }
 
   protected:
-    std::vector<IControllerPlugin *> m_plugins;
-  };
+    std::vector<IControllerPlugin*> m_plugins;
+};
 
 } // namespace Ramulator
 

@@ -3,13 +3,15 @@
 
 #include "base.h"
 
-namespace Ramulator {
+namespace Ramulator
+{
 
-class IBlockHammer {
-public:
+class IBlockHammer
+{
+  public:
     virtual bool is_act_safe(Request& req) = 0;
 };
 
-}       //  namespace Ramulator
+} //  namespace Ramulator
 
-#endif  //  RAMULATOR_CONTROLLER_IBLOCKHAMMER_H
+#endif //  RAMULATOR_CONTROLLER_IBLOCKHAMMER_H

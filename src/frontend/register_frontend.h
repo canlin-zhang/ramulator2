@@ -4,10 +4,10 @@
 
 namespace Ramulator
 {
-    void register_frontend()
-    {
-        // Register processors
-        (void)&SimpleO3::init;
-        (void)&BHO3::init;
-    }
+void register_frontend()
+{
+    // Register processors
+    (void)&SimpleO3::init;
+    (void)&BHO3::init;
 }
+} // namespace Ramulator

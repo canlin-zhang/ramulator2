@@ -5,7 +5,7 @@
 #include "impl/processor/bhO3/bhllc.h"
 #include "memory_system.h"
 
-#include "impl/plugin/prac/prac.h"
+#include "impl/plugin/prac/prac.hpp"
 
 namespace Ramulator
 {

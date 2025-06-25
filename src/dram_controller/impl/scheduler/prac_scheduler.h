@@ -4,7 +4,7 @@
 #include "base.h"
 #include "bh_controller.h"
 #include "bh_scheduler.h"
-#include "impl/plugin/prac/prac.h"
+#include "impl/plugin/prac/prac.hpp"
 
 namespace Ramulator
 {

@@ -39,14 +39,12 @@ set(CONTROLLER_FILES
   impl/plugin/blockhammer/blockhammer.cpp
   impl/plugin/blockhammer/blockhammer.h
 
-  impl/plugin/device_config/device_config.cpp
   impl/plugin/device_config/device_config.h
+  impl/plugin/device_config/device_config.cpp
 
-  impl/plugin/bliss/bliss.cpp
-  impl/plugin/bliss/bliss.h
+  impl/plugin/bliss/bliss.hpp
 
-  impl/plugin/prac/prac.cpp
-  impl/plugin/prac/prac.h
+  impl/plugin/prac/prac.hpp
 )
 
 add_library(ramulator-controller STATIC ${CONTROLLER_FILES})

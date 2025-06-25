@@ -29,6 +29,10 @@
 #include "impl/plugin/rrs.hpp"
 #include "impl/plugin/trace_recorder.hpp"
 // #include "impl/plugin/trr.hpp"
+#include "impl/plugin/bliss/bliss.hpp"
+#include "impl/plugin/blockhammer/blockhammer.h"
+#include "impl/plugin/device_config/device_config.h"
+#include "impl/plugin/prac/prac.hpp"
 #include "impl/plugin/twice.hpp"
 
 namespace Ramulator
@@ -81,5 +85,7 @@ void register_plugin()
     (void)&TraceRecorder::init;
     // (void)&CounterBasedTRR::init;
     (void)&TWiCeIdeal::init;
+
+    (void)&BLISS::init;
 }
 } // namespace Ramulator

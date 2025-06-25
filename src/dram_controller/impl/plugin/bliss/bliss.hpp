@@ -8,9 +8,14 @@
 
 #include <algorithm>
 #include <vector>
-
 namespace Ramulator
 {
+
+class IBLISS
+{
+  public:
+    virtual bool is_blacklisted(int source_id) = 0;
+};
 
 class BLISS : public IControllerPlugin, public Implementation, public IBLISS
 {

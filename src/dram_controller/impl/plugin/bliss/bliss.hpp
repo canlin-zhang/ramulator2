@@ -1,6 +1,6 @@
-#include "dram_controller/impl/plugin/bliss/bliss.h"
 #include "base/base.h"
 #include "dram_controller/controller.h"
+#include "dram_controller/impl/plugin/bliss/bliss.h"
 #include "dram_controller/impl/plugin/device_config/device_config.h"
 #include "dram_controller/plugin.h"
 #include "frontend/impl/processor/bhO3/bhO3.h"

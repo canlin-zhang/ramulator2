@@ -11,7 +11,7 @@ namespace Ramulator
 class LinearMapperBase : public IAddrMapper
 {
   public:
-    IDRAM *m_dram = nullptr;
+    IDRAM* m_dram = nullptr;
 
     int m_num_levels = -1;        // How many levels in the hierarchy?
     std::vector<int> m_addr_bits; // How many address bits for each level in the hierarchy?
@@ -57,7 +57,8 @@ class LinearMapperBase : public IAddrMapper
     }
 }
 
-class ChRaBaRoCo final : public LinearMapperBase, public Implementation
+class ChRaBaRoCo final : public LinearMapperBase,
+                         public Implementation
 {
     RAMULATOR_REGISTER_IMPLEMENTATION(IAddrMapper, ChRaBaRoCo, "ChRaBaRoCo",
                                       "Applies a trival mapping to the address.");

@@ -37,12 +37,12 @@ class PRACScheduler : public IBHScheduler, public Implementation
         m_dram = m_ctrl->m_dram;
         m_prac = m_ctrl->get_plugin<IPRAC>();
 
-    if (!m_prac)
-    {
-        std::cout << "[RAMULATOR::PRACSched] Need PRAC plugin!" << std::endl;
-        std::exit(0);
+        if (!m_prac)
+        {
+            std::cout << "[RAMULATOR::PRACSched] Need PRAC plugin!" << std::endl;
+            std::exit(0);
+        }
     }
-}
 
     ReqBuffer::iterator compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2) override
     {

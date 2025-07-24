@@ -346,151 +346,151 @@ class GenericDRAMController final : public IDRAMController, public Implementatio
      * If so, it finishes this request by calling its callback and poping it from the pending queue.
      */
     void serve_completed_reads()
+{
+    if (pending.size())
     {
-        if (pending.size())
+        // Check the first pending request
+        auto& req = pending[0];
+        if (req.depart <= m_clk)
         {
-            // Check the first pending request
-            auto& req = pending[0];
-            if (req.depart <= m_clk)
+            // Request received data from dram
+            if (req.depart - req.arrive > 1)
             {
-                // Request received data from dram
-                if (req.depart - req.arrive > 1)
-                {
-                    // Check if this requests accesses the DRAM or is being forwarded.
-                    // TODO add the stats back
-                    s_read_latency += req.depart - req.arrive;
-                }
+                // Check if this requests accesses the DRAM or is being forwarded.
+                // TODO add the stats back
+                s_read_latency += req.depart - req.arrive;
+            }
 
-                if (req.callback)
-                {
-                    // If the request comes from outside (e.g., processor), call its callback
-                    req.callback(req);
-                }
-                // Finally, remove this request from the pending queue
-                pending.pop_front();
-            }
-        };
-    };
-
-    /**
-     * @brief    Checks if we need to switch to write mode
-     *
-     */
-    void set_write_mode()
-    {
-        if (!m_is_write_mode)
-        {
-            if ((m_write_buffer.size() > m_wr_high_watermark * m_write_buffer.max_size) ||
-                m_read_buffer.size() == 0)
+            if (req.callback)
             {
-                m_is_write_mode = true;
+                // If the request comes from outside (e.g., processor), call its callback
+                req.callback(req);
             }
-        }
-        else
-        {
-            if ((m_write_buffer.size() < m_wr_low_watermark * m_write_buffer.max_size) &&
-                m_read_buffer.size() != 0)
-            {
-                m_is_write_mode = false;
-            }
+            // Finally, remove this request from the pending queue
+            pending.pop_front();
         }
     };
+};
+
+/**
+ * @brief    Checks if we need to switch to write mode
+ *
+ */
+void set_write_mode()
+{
+    if (!m_is_write_mode)
+    {
+        if ((m_write_buffer.size() > m_wr_high_watermark * m_write_buffer.max_size) ||
+            m_read_buffer.size() == 0)
+        {
+            m_is_write_mode = true;
+        }
+    }
+    else
+    {
+        if ((m_write_buffer.size() < m_wr_low_watermark * m_write_buffer.max_size) &&
+            m_read_buffer.size() != 0)
+        {
+            m_is_write_mode = false;
+        }
+    }
+};
 }
 
-    /**
-     * @brief    Helper function to find a request to schedule from the buffers.
-     *
-     */
-    bool schedule_request(ReqBuffer::iterator& req_it, ReqBuffer*& req_buffer)
+/**
+ * @brief    Helper function to find a request to schedule from the buffers.
+ *
+ */
+bool schedule_request(ReqBuffer::iterator& req_it, ReqBuffer*& req_buffer)
+{
+    bool request_found = false;
+    // 2.1    First, check the act buffer to serve requests that are already activating (avoid
+    // useless ACTs)
+    if (req_it = m_scheduler->get_best_request(m_active_buffer); req_it != m_active_buffer.end())
     {
-        bool request_found = false;
-        // 2.1    First, check the act buffer to serve requests that are already activating (avoid
-        // useless ACTs)
-        if (req_it = m_scheduler->get_best_request(m_active_buffer);
-            req_it != m_active_buffer.end())
+        if (m_dram->check_ready(req_it->command, req_it->addr_vec))
         {
-            if (m_dram->check_ready(req_it->command, req_it->addr_vec))
+            request_found = true;
+            req_buffer = &m_active_buffer;
+        }
+    }
+
+    // 2.2    If no requests can be scheduled from the act buffer, check the rest of the buffers
+    if (!request_found)
+    {
+        // 2.2.1    We first check the priority buffer to prioritize e.g., maintenance requests
+        if (m_priority_buffer.size() != 0)
+        {
+            req_buffer = &m_priority_buffer;
+            req_it = m_priority_buffer.begin();
+            req_it->command = m_dram->get_preq_command(req_it->final_command, req_it->addr_vec);
+
+            request_found = m_dram->check_ready(req_it->command, req_it->addr_vec);
+            if (!request_found & m_priority_buffer.size() != 0)
             {
-                request_found = true;
-                req_buffer = &m_active_buffer;
+                return false;
             }
         }
 
-        // 2.2    If no requests can be scheduled from the act buffer, check the rest of the buffers
+        // 2.2.1    If no request to be scheduled in the priority buffer, check the read and
+        // write buffers.
         if (!request_found)
         {
-            // 2.2.1    We first check the priority buffer to prioritize e.g., maintenance requests
-            if (m_priority_buffer.size() != 0)
+            // Query the write policy to decide which buffer to serve
+            set_write_mode();
+            auto& buffer = m_is_write_mode ? m_write_buffer : m_read_buffer;
+            if (req_it = m_scheduler->get_best_request(buffer); req_it != buffer.end())
             {
-                req_buffer = &m_priority_buffer;
-                req_it = m_priority_buffer.begin();
-                req_it->command = m_dram->get_preq_command(req_it->final_command, req_it->addr_vec);
-
                 request_found = m_dram->check_ready(req_it->command, req_it->addr_vec);
-                if (!request_found & m_priority_buffer.size() != 0)
-                {
-                    return false;
-                }
-            }
-
-            // 2.2.1    If no request to be scheduled in the priority buffer, check the read and
-            // write buffers.
-            if (!request_found)
-            {
-                // Query the write policy to decide which buffer to serve
-                set_write_mode();
-                auto& buffer = m_is_write_mode ? m_write_buffer : m_read_buffer;
-                if (req_it = m_scheduler->get_best_request(buffer); req_it != buffer.end())
-                {
-                    request_found = m_dram->check_ready(req_it->command, req_it->addr_vec);
-                    req_buffer = &buffer;
-                }
+                req_buffer = &buffer;
             }
         }
+    }
 
-        // 2.3 If we find a request to schedule, we need to check if it will close an opened row in
-        // the active buffer.
-        if (request_found)
+    // 2.3 If we find a request to schedule, we need to check if it will close an opened row in
+    // the active buffer.
+    if (request_found)
+    {
+        if (m_dram->m_command_meta(req_it->command).is_closing)
         {
-            if (m_dram->m_command_meta(req_it->command).is_closing)
+            auto& rowgroup = req_it->addr_vec;
+            for (auto _it = m_active_buffer.begin(); _it != m_active_buffer.end(); _it++)
             {
-                auto& rowgroup = req_it->addr_vec;
-                for (auto _it = m_active_buffer.begin(); _it != m_active_buffer.end(); _it++)
+                auto& _it_rowgroup = _it->addr_vec;
+                bool is_matching = true;
+                for (int i = 0; i < m_bank_addr_idx + 1; i++)
                 {
-                    auto& _it_rowgroup = _it->addr_vec;
-                    bool is_matching = true;
-                    for (int i = 0; i < m_bank_addr_idx + 1; i++)
+                    if (_it_rowgroup[i] != rowgroup[i] && _it_rowgroup[i] != -1 &&
+                        rowgroup[i] != -1)
                     {
-                        if (_it_rowgroup[i] != rowgroup[i] && _it_rowgroup[i] != -1 &&
-                            rowgroup[i] != -1)
-                        {
-                            is_matching = false;
-                            break;
-                        }
-                    }
-                    if (is_matching)
-                    {
-                        request_found = false;
+                        is_matching = false;
                         break;
                     }
                 }
+                if (is_matching)
+                {
+                    request_found = false;
+                    break;
+                }
             }
         }
-
-        return request_found;
     }
 
-    void finalize() override
-    {
-        s_avg_read_latency = (float)s_read_latency / (float)s_num_read_reqs;
+    return request_found;
+}
 
-        s_queue_len_avg = (float)s_queue_len / (float)m_clk;
-        s_read_queue_len_avg = (float)s_read_queue_len / (float)m_clk;
-        s_write_queue_len_avg = (float)s_write_queue_len / (float)m_clk;
-        s_priority_queue_len_avg = (float)s_priority_queue_len / (float)m_clk;
+void finalize() override
+{
+    s_avg_read_latency = (float)s_read_latency / (float)s_num_read_reqs;
 
-        return;
-    }
-};
+    s_queue_len_avg = (float)s_queue_len / (float)m_clk;
+    s_read_queue_len_avg = (float)s_read_queue_len / (float)m_clk;
+    s_write_queue_len_avg = (float)s_write_queue_len / (float)m_clk;
+    s_priority_queue_len_avg = (float)s_priority_queue_len / (float)m_clk;
+
+    return;
+}
+}
+;
 
 } // namespace Ramulator

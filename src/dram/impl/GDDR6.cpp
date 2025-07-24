@@ -586,7 +586,7 @@ class GDDR6 : public IDRAM, public Implementation
 
                 /// RAS <-> RAS
                 //{.level = "bank", .preceding = {"ACT"}, .following = {"ACT"}, .latency =
-                //V("nRC")}, //should this be added?
+                // V("nRC")}, //should this be added?
             });
 #undef V
     };

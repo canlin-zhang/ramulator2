@@ -16,9 +16,9 @@
 namespace Ramulator
 {
 
-  class Implementation;
-  class IFrontEnd;
-  class IMemorySystem;
+class Implementation;
+class IFrontEnd;
+class IMemorySystem;
 
 class Implementation;
 class IFrontEnd;

@@ -17,18 +17,27 @@ class SimpleO3 final : public IFrontEnd, public Implementation
   private:
     ITranslation* m_translation;
 
-        // LLC params
-        int llc_latency = param<int>("llc_latency").desc("Aggregated latency of the LLC.").default_val(47);
-        int llc_linesize_bytes = param<int>("llc_linesize").desc("LLC cache line size in bytes.").default_val(64);
-        int llc_associativity = param<int>("llc_associativity").desc("LLC set associativity.").default_val(8);
-        int llc_capacity_per_core = parse_capacity_str(param<std::string>("llc_capacity_per_core").desc("LLC capacity per core.").default_val("2MB"));
-        int llc_num_mshr_per_core = param<int>("llc_num_mshr_per_core").desc("Number of LLC MSHR entries per core.").default_val(16);
+    // LLC params
+    int llc_latency =
+        param<int>("llc_latency").desc("Aggregated latency of the LLC.").default_val(47);
+    int llc_linesize_bytes =
+        param<int>("llc_linesize").desc("LLC cache line size in bytes.").default_val(64);
+    int llc_associativity =
+        param<int>("llc_associativity").desc("LLC set associativity.").default_val(8);
+    int llc_capacity_per_core = parse_capacity_str(param<std::string>("llc_capacity_per_core")
+                                                       .desc("LLC capacity per core.")
+                                                       .default_val("2MB"));
+    int llc_num_mshr_per_core = param<int>("llc_num_mshr_per_core")
+                                    .desc("Number of LLC MSHR entries per core.")
+                                    .default_val(16);
 
-        // Simulation parameters
-        m_num_expected_insts = param<int>("num_expected_insts").desc("Number of instructions that the frontend should execute.").required();
+    // Simulation parameters
+    m_num_expected_insts = param<int>("num_expected_insts")
+                               .desc("Number of instructions that the frontend should execute.")
+                               .required();
 
-        // Create address translation module
-        m_translation = create_child_ifce<ITranslation>();
+    // Create address translation module
+    m_translation = create_child_ifce<ITranslation>();
 
   public:
     void init() override
@@ -123,7 +132,7 @@ void SimpleO3::tick()
         m_logger->info("Processor Heartbeat {} cycles.", m_clk);
     }
 
-    void receive(Request& req)
+    void receive(Request & req)
     {
         core->tick();
     }
@@ -166,7 +175,7 @@ bool SimpleO3::is_finished()
         return true;
     }
 
-    void connect_memory_system(IMemorySystem* memory_system) override
+    void connect_memory_system(IMemorySystem * memory_system) override
     {
         m_llc->connect_memory_system(memory_system);
     };

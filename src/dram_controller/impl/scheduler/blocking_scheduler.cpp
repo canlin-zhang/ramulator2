@@ -29,35 +29,24 @@ class BlockingScheduler : public IBHScheduler, public Implementation
 }
 
     void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override
+{
+    m_dram = cast_parent<IBHDRAMController>()->m_dram;
+    m_bh = cast_parent<IBHDRAMController>()->get_plugin<IBlockHammer>();
+    if (!m_bh)
     {
-        m_dram = cast_parent<IBHDRAMController>()->m_dram;
-        m_bh = cast_parent<IBHDRAMController>()->get_plugin<IBlockHammer>();
-        if (!m_bh)
-        {
-            std::cout << "BlockHammer scheduler requires BlockHammer plugin enabled!" << std::endl;
-            std::exit(0);
-        }
+        std::cout << "BlockHammer scheduler requires BlockHammer plugin enabled!" << std::endl;
+        std::exit(0);
     }
+}
 
-    ReqBuffer::iterator compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2) override
+ReqBuffer::iterator compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2) override
+{
+    bool ready1 = m_dram->check_ready(req1->command, req1->addr_vec);
+    bool ready2 = m_dram->check_ready(req2->command, req2->addr_vec);
+
+    if (ready1 ^ ready2)
     {
-        bool ready1 = m_dram->check_ready(req1->command, req1->addr_vec);
-        bool ready2 = m_dram->check_ready(req2->command, req2->addr_vec);
-
-        if (ready1 ^ ready2)
-        {
-            if (ready1)
-            {
-                return req1;
-            }
-            else
-            {
-                return req2;
-            }
-        }
-
-        // Fallback to FCFS
-        if (req1->arrive <= req2->arrive)
+        if (ready1)
         {
             return req1;
         }
@@ -67,44 +56,55 @@ class BlockingScheduler : public IBHScheduler, public Implementation
         }
     }
 
-    ReqBuffer::iterator get_best_request(ReqBuffer& buffer) override
+    // Fallback to FCFS
+    if (req1->arrive <= req2->arrive)
     {
-        if (buffer.size() == 0)
-        {
-            return buffer.end();
-        }
+        return req1;
+    }
+    else
+    {
+        return req2;
+    }
+}
 
-        for (auto& req : buffer)
-        {
-            req.command = m_dram->get_preq_command(req.final_command, req.addr_vec);
-        }
-
-        auto candidate = buffer.begin();
-        while (candidate != buffer.end() && !m_bh->is_act_safe(*candidate))
-        {
-            candidate++;
-        }
-
-        if (candidate == buffer.end())
-        {
-            return buffer.end();
-        }
-
-        // std::next(candidate, 1)
-        for (auto next = std::next(buffer.begin(), 1); next != buffer.end(); next++)
-        {
-            if (!m_bh->is_act_safe(*next))
-            {
-                continue;
-            }
-            candidate = compare(candidate, next);
-        }
-        return candidate;
+ReqBuffer::iterator get_best_request(ReqBuffer& buffer) override
+{
+    if (buffer.size() == 0)
+    {
+        return buffer.end();
     }
 
-    virtual void tick() override
+    for (auto& req : buffer)
     {
-        m_clk++;
+        req.command = m_dram->get_preq_command(req.final_command, req.addr_vec);
     }
+
+    auto candidate = buffer.begin();
+    while (candidate != buffer.end() && !m_bh->is_act_safe(*candidate))
+    {
+        candidate++;
+    }
+
+    if (candidate == buffer.end())
+    {
+        return buffer.end();
+    }
+
+    // std::next(candidate, 1)
+    for (auto next = std::next(buffer.begin(), 1); next != buffer.end(); next++)
+    {
+        if (!m_bh->is_act_safe(*next))
+        {
+            continue;
+        }
+        candidate = compare(candidate, next);
+    }
+    return candidate;
+}
+
+virtual void tick() override
+{
+    m_clk++;
+}
 
 } // namespace Ramulator

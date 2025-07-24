@@ -10,9 +10,10 @@
 
 #include "base/base.h"
 
-
-namespace Ramulator {
-namespace Config {
+namespace Ramulator
+{
+namespace Config
+{
 
 /**
  * @brief    Load and parse the YAML configuration file for the simulation.
@@ -22,14 +23,14 @@ namespace Config {
  */
 YAML::Node parse_config_file(const std::string& path, const std::vector<std::string>& params);
 
-
-namespace Details {
+namespace Details
+{
 
 /**
  * @brief    Load the YAML file and set the current path to the parent path of the file.
- * 
+ *
  * @param    path_str       Path to the yaml file.
- * @return   YAML::Node 
+ * @return   YAML::Node
  */
 YAML::Node load_config_file(const std::string& path_str);
 
@@ -42,17 +43,17 @@ YAML::Node load_config_file(const std::string& path_str);
 void resolve_included_configs(YAML::Node node);
 
 /**
- * @brief    Override the config (add if non-existent) in the YAML file with the command line options.
+ * @brief    Override the config (add if non-existent) in the YAML file with the command line
+ * options.
  *
  * @param    config         Parsed YAML configurations.
  * @param    params         Command line option names and values.
  */
 void override_configs(YAML::Node config, const std::vector<std::string>& params);
 
-}    // namespace Details
-}    // namespace Config
+} // namespace Details
+} // namespace Config
 
+} // namespace Ramulator
 
-}        // namespace Ramulator
-
-#endif   // RAMULATOR_BASE_CONFIG_H
+#endif // RAMULATOR_BASE_CONFIG_H

@@ -1,22 +1,22 @@
-#ifndef     RAMULATOR_CONTROLLER_REFRESH_H
-#define     RAMULATOR_CONTROLLER_REFRESH_H
+#ifndef RAMULATOR_CONTROLLER_REFRESH_H
+#define RAMULATOR_CONTROLLER_REFRESH_H
 
-#include <vector>
 #include <string>
+#include <vector>
 
 #include "base/base.h"
 
+namespace Ramulator
+{
 
-namespace Ramulator {
-
-class IRefreshManager {
-  RAMULATOR_REGISTER_INTERFACE(IRefreshManager, "RefreshManager", "Refresh Manager Interface.");
+class IRefreshManager
+{
+    RAMULATOR_REGISTER_INTERFACE(IRefreshManager, "RefreshManager", "Refresh Manager Interface.");
 
   public:
     virtual void tick() = 0;
 };
 
-}        // namespace Ramulator
+} // namespace Ramulator
 
-
-#endif   // RAMULATOR_CONTROLLER_REFRESH_H
+#endif // RAMULATOR_CONTROLLER_REFRESH_H

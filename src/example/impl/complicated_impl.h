@@ -1,18 +1,22 @@
-#include <iostream>
 #include <fstream>
-#include <map>
+#include <iostream>
 #include <list>
+#include <map>
 
-#include "example/example_ifce.h"
 #include "base/serialization.h"
+#include "example/example_ifce.h"
 
-namespace Ramulator {
+namespace Ramulator
+{
 
-class ComplicatedImpl : public ExampleIfce, public Implementation {
-  RAMULATOR_REGISTER_IMPLEMENTATION(ExampleIfce, ComplicatedImpl, "ComplicatedImpl", "An example of a complicated implementation class.");
+class ComplicatedImpl : public ExampleIfce, public Implementation
+{
+    RAMULATOR_REGISTER_IMPLEMENTATION(ExampleIfce, ComplicatedImpl, "ComplicatedImpl",
+                                      "An example of a complicated implementation class.");
+
   public:
     void init() {};
     void special_function();
-}; 
+};
 
-}        // namespace Ramulator
+} // namespace Ramulator

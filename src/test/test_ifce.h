@@ -1,15 +1,16 @@
-#ifndef     RAMULATOR_TEST_TEST_IFCE_H
-#define     RAMULATOR_TEST_TEST_IFCE_H
+#ifndef RAMULATOR_TEST_TEST_IFCE_H
+#define RAMULATOR_TEST_TEST_IFCE_H
 
 #include "base/base.h"
 
+namespace Ramulator
+{
 
-namespace Ramulator {
-
-class TestIfce {
-  RAMULATOR_REGISTER_INTERFACE(TestIfce, "TestIfce", "A test example of an interface class.")
+class TestIfce
+{
+    RAMULATOR_REGISTER_INTERFACE(TestIfce, "TestIfce", "A test example of an interface class.")
 };
 
-}        // namespace Ramulator
+} // namespace Ramulator
 
-#endif   // RAMULATOR_TEST_TEST_IFCE_H
+#endif // RAMULATOR_TEST_TEST_IFCE_H

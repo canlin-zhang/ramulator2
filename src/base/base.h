@@ -11,16 +11,16 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "base/clocked.h"
-#include "base/debug.h"
-#include "base/exception.h"
-#include "base/factory.h"
-#include "base/logging.h"
-#include "base/param.h"
-#include "base/request.h"
-#include "base/stats.h"
-#include "base/type.h"
-#include "base/utils.h"
+#include "clocked.h"
+#include "debug.h"
+#include "exception.h"
+#include "factory.h"
+#include "logging.h"
+#include "param.h"
+#include "request.h"
+#include "stats.h"
+#include "type.h"
+#include "utils.h"
 
 #ifndef uint
 #define uint unsigned int

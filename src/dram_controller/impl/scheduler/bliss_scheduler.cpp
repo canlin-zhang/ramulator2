@@ -3,34 +3,7 @@
 namespace Ramulator
 {
 
-namespace Ramulator
-{
-
-class BLISSScheduler : public IBHScheduler, public Implementation
-{
-    RAMULATOR_REGISTER_IMPLEMENTATION(IBHScheduler, BLISSScheduler, "BLISS", "BLISS Scheduler.")
-
-  private:
-    IDRAM* m_dram;
-    IBLISS* m_bliss;
-
-    int m_clk = -1;
-
-    int m_req_rd = -1;
-    int m_req_wr = -1;
-
-    bool m_is_debug;
-
-    const int SAFE_IDX = 0;
-    const int READY_IDX = 1;
-
-  public:
-    void init() override
-    {
-    }
-}
-
-    void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override
+void BLISSScheduler::setup(IFrontEnd* frontend, IMemorySystem* memory_system)
 {
     auto* ctrl = cast_parent<IBHDRAMController>();
     m_dram = ctrl->m_dram;
@@ -46,7 +19,7 @@ class BLISSScheduler : public IBHScheduler, public Implementation
     }
 }
 
-ReqBuffer::iterator compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2) override
+ReqBuffer::iterator BLISSScheduler::compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2)
 {
     bool safe1 = req1->scratchpad[SAFE_IDX];
     bool safe2 = req2->scratchpad[SAFE_IDX];
@@ -89,7 +62,7 @@ ReqBuffer::iterator compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2) 
     }
 }
 
-ReqBuffer::iterator get_best_request(ReqBuffer& buffer) override
+ReqBuffer::iterator BLISSScheduler::get_best_request(ReqBuffer& buffer)
 {
     if (buffer.size() == 0)
     {
@@ -118,15 +91,5 @@ ReqBuffer::iterator get_best_request(ReqBuffer& buffer) override
     }
     return candidate;
 }
-
-virtual void tick() override
-{
-    m_clk++;
-}
-else
-{
-    return req2;
-}
-} // namespace Ramulator
 
 } // namespace Ramulator

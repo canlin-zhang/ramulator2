@@ -1,3 +1,4 @@
+#pragma once
 #include <limits>
 #include <random>
 #include <unordered_map>
@@ -76,23 +77,6 @@ class PARA : public IControllerPlugin, public Implementation
             }
         }
     };
-};
-
-void update(bool request_found, ReqBuffer::iterator& req_it) override
-{
-    if (request_found)
-    {
-        if (m_dram->m_command_meta(req_it->command).is_opening &&
-            m_dram->m_command_scopes(req_it->command) == m_row_level)
-        {
-            if (m_distribution(m_generator) < m_pr_threshold)
-            {
-                Request vrr_req(req_it->addr_vec, m_VRR_req_id);
-                m_ctrl->priority_send(vrr_req);
-            }
-        }
-    }
-};
 };
 
 } // namespace Ramulator

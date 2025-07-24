@@ -1,5 +1,5 @@
-#include "frontend/impl/processor/bhO3/bhllc.h"
-#include "dram/dram.h"
+#include "impl/processor/bhO3/bhllc.h"
+#include "dram.h"
 #include <iostream>
 
 namespace Ramulator

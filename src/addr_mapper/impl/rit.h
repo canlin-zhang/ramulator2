@@ -1,10 +1,11 @@
+#pragma once
 #include <unordered_map>
 #include <vector>
 
-#include "addr_mapper/addr_mapper.h"
-#include "base/base.h"
-#include "dram/dram.h"
-#include "memory_system/memory_system.h"
+#include "addr_mapper.h"
+#include "base.h"
+#include "dram.h"
+#include "memory_system.h"
 
 namespace Ramulator
 {

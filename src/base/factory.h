@@ -9,16 +9,15 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "base/debug.h"
-#include "base/logging.h"
-#include "base/type.h"
+#include "debug.h"
+#include "logging.h"
+#include "type.h"
 
 namespace Ramulator
 {
 
-class Implementation;
-class IFrontEnd;
-class IMemorySystem;
+DECLARE_DEBUG_FLAG(DFACTORY);
+ENABLE_DEBUG_FLAG(DFACTORY);
 
 class Implementation;
 class IFrontEnd;

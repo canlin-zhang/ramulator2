@@ -1,8 +1,9 @@
-#include "base/base.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/impl/plugin/device_config/device_config.h"
-#include "dram_controller/impl/plugin/prac/prac.h"
-#include "dram_controller/plugin.h"
+#pragma once
+#include "base.h"
+#include "controller.h"
+#include "dram.h"
+#include "impl/plugin/device_config/device_config.h"
+#include "plugin.h"
 
 #include <functional>
 #include <limits>

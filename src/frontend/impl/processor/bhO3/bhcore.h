@@ -7,9 +7,9 @@
 #include <string>
 #include <vector>
 
-#include "base/request.h"
-#include "base/type.h"
-#include "translation/translation.h"
+#include "request.h"
+#include "translation.h"
+#include "type.h"
 
 namespace Ramulator
 {

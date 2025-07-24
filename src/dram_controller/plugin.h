@@ -9,22 +9,19 @@
 namespace Ramulator
 {
 
+class IDRAMController;
+
 class IControllerPlugin
 {
     RAMULATOR_REGISTER_INTERFACE(IControllerPlugin, "ControllerPlugin",
                                  "Plugins for the memory controller.");
 
-    class IControllerPlugin
-    {
-        RAMULATOR_REGISTER_INTERFACE(IControllerPlugin, "ControllerPlugin",
-                                     "Plugins for the memory controller.");
+  protected:
+    IDRAMController* m_ctrl = nullptr;
 
-      protected:
-        IDRAMController* m_ctrl = nullptr;
-
-      public:
-        virtual void update(bool request_found, ReqBuffer::iterator& req_it) = 0;
-    };
+  public:
+    virtual void update(bool request_found, ReqBuffer::iterator& req_it) = 0;
+};
 
 } // namespace Ramulator
 

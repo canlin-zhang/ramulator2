@@ -3,38 +3,11 @@
 #include <unordered_set>
 #include <vector>
 
-#include "base/base.h"
-#include "frontend/frontend.h"
-#include "translation/translation.h"
+#include "random_translation.h"
 
 namespace Ramulator
 {
-
-class RandomTranslation : public ITranslation, public Implementation
-{
-    RAMULATOR_REGISTER_IMPLEMENTATION(ITranslation, RandomTranslation, "RandomTranslation",
-                                      "Randomly allocate physical pages to virtual pages.");
-
-    IFrontEnd* m_frontend;
-
-    m_logger = Logging::create_logger("RandomTranslation");
-}
-
-Addr_t m_max_paddr; // Max physical address
-Addr_t m_pagesize;  // Page size in bytes
-int m_offsetbits;   // The number of bits for the page offset
-size_t m_num_pages; // The total number of physical pages
-
-std::vector<bool> m_free_physical_pages; // The set of remaining pages.
-size_t m_num_free_physical_pages;
-
-using Translation_t = std::vector<std::unordered_map<Addr_t, Addr_t>>;
-Translation_t m_translation; // A vector of <vpn:ppn> maps, each core has its own map
-
-std::unordered_set<Addr_t> m_reserved_pages; // A vector of reserved pages
-
-public:
-void init() override
+void RandomTranslation::init()
 {
     int seed = param<int>("seed")
                    .desc("The seed for the random number generator used to allocate pages.")
@@ -55,9 +28,9 @@ void init() override
     m_translation.resize(m_frontend->get_num_cores());
 
     m_logger = Logging::create_logger("RandomTranslation");
-};
+}
 
-bool translate(Request& req) override
+bool RandomTranslation::translate(Request& req)
 {
     Addr_t vpn = req.addr >> m_offsetbits;
 
@@ -104,21 +77,20 @@ bool translate(Request& req) override
 
     req.addr = p_addr;
     return true;
-};
+}
 
-bool reserve(const std::string& type, Addr_t addr) override
+bool RandomTranslation::reserve(const std::string& type, Addr_t addr)
 {
     Addr_t ppn = addr >> m_offsetbits;
     // Add page to reserved pages if it is not already reserved
     m_reserved_pages.insert(ppn);
     // std::cout << "Reserved PPN " << ppn << "." << std::endl;
     return true;
-};
+}
 
-Addr_t get_max_addr() override
+Addr_t RandomTranslation::get_max_addr()
 {
     return m_max_paddr;
-};
-};
+}
 
 } // namespace Ramulator

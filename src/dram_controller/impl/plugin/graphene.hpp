@@ -1,3 +1,4 @@
+#pragma once
 #include <limits>
 #include <random>
 #include <unordered_map>

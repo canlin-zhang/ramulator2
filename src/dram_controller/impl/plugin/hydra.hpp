@@ -1,3 +1,4 @@
+#pragma once
 #include <bitset>
 #include <iomanip>
 #include <limits>
@@ -5,12 +6,12 @@
 #include <unordered_map>
 #include <vector>
 
-#include "addr_mapper/addr_mapper.h"
-#include "base/base.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/plugin.h"
-#include "frontend/frontend.h"
-#include "translation/translation.h"
+#include "addr_mapper.h"
+#include "base.h"
+#include "controller.h"
+#include "frontend.h"
+#include "plugin.h"
+#include "translation.h"
 
 namespace Ramulator
 {

@@ -8,8 +8,8 @@
 #include <spdlog/spdlog.h>
 #include <yaml-cpp/yaml.h>
 
-#include "base/exception.h"
-#include "base/type.h"
+#include "exception.h"
+#include "type.h"
 
 namespace Ramulator
 {

@@ -7,11 +7,11 @@
 #include <unordered_map>
 #include <vector>
 
-#include "base/clocked.h"
-#include "base/debug.h"
-#include "base/request.h"
-#include "base/type.h"
-#include "memory_system/bh_memory_system.h"
+#include "bh_memory_system.h"
+#include "clocked.h"
+#include "debug.h"
+#include "request.h"
+#include "type.h"
 
 // BH Changes Begin
 #include <unordered_set>

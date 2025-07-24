@@ -3,47 +3,14 @@
 namespace Ramulator
 {
 
-class BHScheduler : public IBHScheduler, public Implementation
+ReqBuffer::iterator BHScheduler::compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2)
 {
-    RAMULATOR_REGISTER_IMPLEMENTATION(IBHScheduler, BHScheduler, "BHScheduler",
-                                      "BHammer Scheduler.")
+    bool ready1 = m_dram->check_ready(req1->command, req1->addr_vec);
+    bool ready2 = m_dram->check_ready(req2->command, req2->addr_vec);
 
-  private:
-    IDRAM* m_dram;
-
-    int m_clk = -1;
-
-    bool m_is_debug;
-
-  public:
-    void init() override
+    if (ready1 ^ ready2)
     {
-    }
-
-    void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override
-    {
-        m_dram = cast_parent<IDRAMController>()->m_dram;
-    }
-
-    ReqBuffer::iterator compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2) override
-    {
-        bool ready1 = m_dram->check_ready(req1->command, req1->addr_vec);
-        bool ready2 = m_dram->check_ready(req2->command, req2->addr_vec);
-
-        if (ready1 ^ ready2)
-        {
-            if (ready1)
-            {
-                return req1;
-            }
-            else
-            {
-                return req2;
-            }
-        }
-
-        // Fallback to FCFS
-        if (req1->arrive <= req2->arrive)
+        if (ready1)
         {
             return req1;
         }
@@ -53,29 +20,35 @@ class BHScheduler : public IBHScheduler, public Implementation
         }
     }
 
-    ReqBuffer::iterator get_best_request(ReqBuffer& buffer) override
+    // Fallback to FCFS
+    if (req1->arrive <= req2->arrive)
     {
-        if (buffer.size() == 0)
-        {
-            return buffer.end();
-        }
+        return req1;
+    }
+    else
+    {
+        return req2;
+    }
+}
 
-        for (auto& req : buffer)
-        {
-            req.command = m_dram->get_preq_command(req.final_command, req.addr_vec);
-        }
-
-        auto candidate = buffer.begin();
-        for (auto next = std::next(buffer.begin(), 1); next != buffer.end(); next++)
-        {
-            candidate = compare(candidate, next);
-        }
-        return candidate;
+ReqBuffer::iterator BHScheduler::get_best_request(ReqBuffer& buffer)
+{
+    if (buffer.size() == 0)
+    {
+        return buffer.end();
     }
 
-    virtual void tick() override
+    for (auto& req : buffer)
     {
-        m_clk++;
+        req.command = m_dram->get_preq_command(req.final_command, req.addr_vec);
     }
+
+    auto candidate = buffer.begin();
+    for (auto next = std::next(buffer.begin(), 1); next != buffer.end(); next++)
+    {
+        candidate = compare(candidate, next);
+    }
+    return candidate;
+}
 
 } // namespace Ramulator

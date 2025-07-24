@@ -3,8 +3,8 @@
 #include <list>
 #include <map>
 
-#include "base/serialization.h"
-#include "example/example_ifce.h"
+#include "example_ifce.h"
+#include "serialization.h"
 
 namespace Ramulator
 {

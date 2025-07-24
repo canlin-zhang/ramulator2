@@ -6,9 +6,11 @@
 
 #include "base/base.h"
 #include "base/config.h"
-#include "example/example_ifce.h"
 #include "frontend/frontend.h"
 #include "memory_system/memory_system.h"
+// #include "example/example_ifce.h"
+
+#include "register_all.h"
 
 int main(int argc, char* argv[])
 {
@@ -36,6 +38,9 @@ int main(int argc, char* argv[])
         std::cerr << program;
         std::exit(1);
     }
+
+    // Register all plugins
+    Ramulator::register_all();
 
     // Are we accepting the configuration YAML through commandline dump?
     bool use_dumped_yaml = false;

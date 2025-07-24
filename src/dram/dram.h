@@ -6,9 +6,9 @@
 #include <string>
 #include <vector>
 
-#include "base/base.h"
-#include "dram/node.h"
-#include "dram/spec.h"
+#include "base.h"
+#include "node.h"
+#include "spec.h"
 
 namespace Ramulator
 {

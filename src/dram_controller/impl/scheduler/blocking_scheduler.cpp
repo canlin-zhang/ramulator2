@@ -3,32 +3,7 @@
 namespace Ramulator
 {
 
-namespace Ramulator
-{
-
-class BlockingScheduler : public IBHScheduler, public Implementation
-{
-    RAMULATOR_REGISTER_IMPLEMENTATION(IBHScheduler, BlockingScheduler, "BlockingScheduler",
-                                      "Blocking DRAM Scheduler.")
-
-  private:
-    IDRAM* m_dram;
-    IBlockHammer* m_bh;
-
-    int m_clk = -1;
-
-    // stats
-    int s_num_blacklist = 0;
-
-    bool m_is_debug;
-
-  public:
-    void init() override
-    {
-    }
-}
-
-    void setup(IFrontEnd* frontend, IMemorySystem* memory_system) override
+void BlockingScheduler::setup(IFrontEnd* frontend, IMemorySystem* memory_system)
 {
     m_dram = cast_parent<IBHDRAMController>()->m_dram;
     m_bh = cast_parent<IBHDRAMController>()->get_plugin<IBlockHammer>();
@@ -39,7 +14,7 @@ class BlockingScheduler : public IBHScheduler, public Implementation
     }
 }
 
-ReqBuffer::iterator compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2) override
+ReqBuffer::iterator BlockingScheduler::compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2)
 {
     bool ready1 = m_dram->check_ready(req1->command, req1->addr_vec);
     bool ready2 = m_dram->check_ready(req2->command, req2->addr_vec);
@@ -67,7 +42,7 @@ ReqBuffer::iterator compare(ReqBuffer::iterator req1, ReqBuffer::iterator req2) 
     }
 }
 
-ReqBuffer::iterator get_best_request(ReqBuffer& buffer) override
+ReqBuffer::iterator BlockingScheduler::get_best_request(ReqBuffer& buffer)
 {
     if (buffer.size() == 0)
     {
@@ -100,11 +75,6 @@ ReqBuffer::iterator get_best_request(ReqBuffer& buffer) override
         candidate = compare(candidate, next);
     }
     return candidate;
-}
-
-virtual void tick() override
-{
-    m_clk++;
 }
 
 } // namespace Ramulator

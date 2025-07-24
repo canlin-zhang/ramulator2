@@ -1,12 +1,13 @@
+#pragma once
 #include <limits>
 #include <random>
 #include <unordered_map>
 #include <vector>
 
-#include "addr_mapper/impl/rit.h"
-#include "base/base.h"
-#include "dram_controller/controller.h"
-#include "dram_controller/plugin.h"
+#include "base.h"
+#include "controller.h"
+#include "impl/rit.h"
+#include "plugin.h"
 
 namespace Ramulator
 {
